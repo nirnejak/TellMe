@@ -1,50 +1,50 @@
-# -*- coding: utf-8 -*-
 # Librarys
-from flask import Flask
 from flask import request
 from flask import jsonify
 
 import psycopg2 as pg2
-
 from passlib.hash import sha256_crypt
 
-# Variables
-api = Flask(__name__)
-
-# Settings
-api.config['DEBUG'] = True
-api.config['SECRET_KEY'] = 'apisecret'
-
+# Importing the Application Modules
+from app import app
 
 # Views
 
 # GetOTP - Return Success Message if aadhar ID is valid and unregistered
-@api.route('/getOTP', methods=['GET', 'POST'])
+@app.route('/api/getOTP', methods=['GET', 'POST'])
 def getOTP():
-    # Receiving Aadhar ID
-    aadharID = request.get_json()['aadharID']
-    
-    if len(aadharID)==12:
-    	# Connecting to database
-    	conn = pg.connect(database="",user="",password="",host="",port="5432")
-    	# Creating cursor
-    	cur = conn.cursor()
-    	# Executing Query
-    	cur.execute("SELECT * FROM users WHERE aadharID = %s",[aadharID])
+    res={}
+    if request.method == 'POST':
+        # Receiving Aadhar ID
+        aadharID = request.get_json()['aadharID']
+        
+        if len(aadharID)==12:
+            # Connecting to database
+            conn = pg.connect(database="",user="",password="",host="",port="5432")
+            # Creating cursor
+            cur = conn.cursor()
+            # Executing Query
+            cur.execute("SELECT * FROM users WHERE aadharID = %s",[aadharID])
 
-    	res = {
-    		"status" : "success",
-    	}
-    	return jsonify(res)
+            # Generating Response
+            res["status"]="success"
+
+            # Commiting the Changes
+            conn.commit()
+
+            # Closing the connection
+            conn.close()
+        else:
+            res["status"]="failed"
+            res['message']="Incorrect Aadhar ID"
     else:
-    	res = {
-    		"status" : "failed",
-    		"message" : "Incorrect Aadhar ID"
-    	}
-    	return jsonify(res)
+        res["status"]="failed"
+        res['message']='Invalid Request Method'
+
+    return jsonify(res)
 
 # verifyOTP - Return Success Message if OTP sent by the user is correct
-@api.route('/verifyOTP', methods=['GET', 'POST'])
+@app.route('/api/verifyOTP', methods=['GET', 'POST'])
 def verifyOTP():
     data = request.get_json()
     
@@ -64,7 +64,7 @@ def verifyOTP():
     	return jsonify(res)
 
 # Register - Register the User and send Success Message
-@api.route('/register', methods=['GET', 'POST'])
+@app.route('/api/register', methods=['GET', 'POST'])
 def register():
     data = request.get_json()
     
@@ -84,8 +84,8 @@ def register():
     	return jsonify(res)
 
 # Login - Get Credentioals and Return User Information
-@api.route('/register', methods=['GET', 'POST'])
-def register():
+@app.route('/api/login', methods=['GET', 'POST'])
+def login():
     data = request.get_json()
     
     aadharID = data['aadharID']
@@ -98,10 +98,10 @@ def register():
             }
             return jsonify(res)
         else:
-        res = {
-            "status" : "failed",
-            "message" : "Incorrect Password"
-        }
+            res = {
+                "status" : "failed",
+                "message" : "Incorrect Password"
+            }
         return jsonify(res)
     else:
         res = {
@@ -112,7 +112,7 @@ def register():
 
 
 # CheckNotification - Check If user has any new notification
-@api.route('/checkNotification', methods=['GET', 'POST'])
+@app.route('/api/checkNotification', methods=['GET', 'POST'])
 def checkNotification():
     data = request.get_json()
     if True:
@@ -129,7 +129,3 @@ def checkNotification():
     		"message" : "No New Notification"
     	}
     	return jsonify(res)
-
-# Run
-if __name__ == '__main__':
-    api.run()
