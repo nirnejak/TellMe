@@ -44,9 +44,9 @@ def export():
 def user():
     return render_template('user.html')
 
-@app.route('/tables', methods=['GET', 'POST'])
-def tables():
-    return render_template('tables.html')
+@app.route('/message', methods=['GET', 'POST'])
+def message():
+    return render_template('message.html')
 
 @app.route('/typography', methods=['GET', 'POST'])
 def typography():

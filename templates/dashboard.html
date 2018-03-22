@@ -63,8 +63,8 @@
                             <p>User Control</p>
                         </a>
                     </li>
-                    <li id="tables">
-                        <a href="javascript:showDiv('tables')">
+                    <li id="message">
+                        <a href="javascript:showDiv('message')">
                             <i class="now-ui-icons ui-1_email-85"></i>
                             <p>Message Broadcast</p>
                         </a>
@@ -486,25 +486,28 @@
     });
 
     function showDiv(dir){
-        $(".content").html("Loading...");
+        $.get("/"+dir)
+        	.done(function(data){
+	        	// Changing Content
+	            $(".content").html(data);
+	            
+	            // Activating the right SideBar Button
+	            $("li").removeClass('active');
+	            $("#"+dir).addClass('active');
+	            
+	            // Setting the Heading of the Section
+	            $(".navbar-brand").html(dir);
 
-        $.get("/"+dir, function(data) {
-            $(".content").html(data);
-            
-            // Activating the right SideBar Button
-            $("li").removeClass('active');
-            $("#"+dir).addClass('active');
-            
-            // Setting the Heading of the Section
-            $(".navbar-brand").html(dir);
-
-            // changing the size of the Header and Removing the Chart
-            if($("#bigDashboardChart").length){
-                $(".panel-header").html('');
-                $(".panel-header").removeClass('panel-header-lg');
-                $(".panel-header").addClass('panel-header-sm');
-            }
-        });
+	            // changing the size of the Header and Removing the Chart
+	            if($("#bigDashboardChart").length){
+	                $(".panel-header").html('');
+	                $(".panel-header").removeClass('panel-header-lg');
+	                $(".panel-header").addClass('panel-header-sm');
+	            }
+        	})
+        	.fail(function( jqXHR, textStatus, errorThrown ) {
+				showNotification('top','center','danger','no internet connection')
+			});;
     }
     
     new Chart(document.getElementById("chartjs-4"),{
