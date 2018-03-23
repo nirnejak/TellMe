@@ -8,6 +8,10 @@ from passlib.hash import sha256_crypt
 # Importing the Application Modules
 from app import app
 
+# Connecting to database
+conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca5e14e8dcc20b2a4bcb4bee2227e5b44cc02f488fba40240d1764c4ac750ca",host="ec2-23-21-217-27.compute-1.amazonaws.com",port="5432")
+
+
 # Views
 
 # GetOTP - Return Success Message if aadhar ID is valid and unregistered
@@ -19,21 +23,26 @@ def getOTP():
         aadharID = request.get_json()['aadharID']
         
         if len(aadharID)==12:
-            # Connecting to database
-            conn = pg.connect(database="",user="",password="",host="",port="5432")
             # Creating cursor
             cur = conn.cursor()
             # Executing Query
-            cur.execute("SELECT * FROM users WHERE aadharID = %s",[aadharID])
+            cur.execute("SELECT aadhar_id FROM users_all WHERE aadhar_id = %s",[aadharID])
 
-            # Generating Response
-            res["status"]="success"
+            # Fetching Data
+            data = cur.fetchone()
+
+            if (data):
+                res["status"]="failed"
+                res['message']="Aadhar ID is already registered"
+            else:
+                # Generating Response
+                res["status"]="success"
 
             # Commiting the Changes
             conn.commit()
 
-            # Closing the connection
-            conn.close()
+            # Closing the cursor
+            cur.close()
         else:
             res["status"]="failed"
             res['message']="Incorrect Aadhar ID"
@@ -51,7 +60,7 @@ def verifyOTP():
     aadharID = data["aadharID"]
     OTP = data["OTP"]
 
-    if 5>2:
+    if OTP=='123456':
     	res = {
     		"status" : "success",
     	}

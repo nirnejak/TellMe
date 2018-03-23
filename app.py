@@ -5,8 +5,7 @@ from flask import Flask
 app = Flask(__name__)
 
 # Settings
-app.config['DEBUG'] = True
-app.config['SECRET_KEY'] = 'secret'
+app.config.from_pyfile('config.py')
 
 from views import *
 from api import *
