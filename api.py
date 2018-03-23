@@ -7,6 +7,8 @@ from passlib.hash import sha256_crypt
 
 # Importing the Application Modules
 from app import app
+from data import aadharData
+
 
 # Connecting to database
 conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca5e14e8dcc20b2a4bcb4bee2227e5b44cc02f488fba40240d1764c4ac750ca",host="ec2-23-21-217-27.compute-1.amazonaws.com",port="5432")
@@ -75,19 +77,20 @@ def verifyOTP():
 # Register - Register the User and send Success Message
 @app.route('/api/register', methods=['GET', 'POST'])
 def register():
-    if reques.method == 'POST':
+    if request.method == 'POST':
         data = request.get_json()
         
         res = {}
         aadharID = data['aadharID']
         password = data['password']
 
-        name = 'User1'
-        contactNo = '1234565590'
+        contactNo = aadharData[aadharID]['contact_no']
+        name = aadharData[aadharID]['name']
+
         # Creating cursor
         cur = conn.cursor()
         # Executing Query
-        cur.execute("INSERT INTO user_all VALUES(%s,%s,%s,%s,%s)",[aadharID,password,name,contactNo,'registered'])
+        cur.execute("INSERT INTO user_all VALUES(%s,%s,%s,%s,%s)",[aadharID, password, name, contactNo,'REGISTERED'])
 
         # Generate Response
         res["status"]="success"
