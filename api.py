@@ -48,7 +48,7 @@ def getOTP():
             res['message']="Incorrect Aadhar ID"
     else:
         res["status"]="failed"
-        res['message']='Invalid Request Method'
+        res["message"]="Invalid Request Method"
 
     return jsonify(res)
 
@@ -69,7 +69,7 @@ def verifyOTP():
             res["message"] = "Incorrect OTP"
     else:
         res["status"]="failed"
-        res['message']='Invalid Request Method'
+        res["message"]="Invalid Request Method"
     return jsonify(res)
 
 # Register - Register the User and send Success Message
@@ -82,6 +82,8 @@ def register():
         aadharID = data['aadharID']
         password = data['password']
 
+        name = 'User1'
+        contactNo = '1234565590'
         # Creating cursor
         cur = conn.cursor()
         # Executing Query
