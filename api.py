@@ -22,7 +22,7 @@ def getOTP():
         # Receiving Aadhar ID
         aadharID = request.get_json()['aadharID']
         
-        if len(aadharID)==13:
+        if len(aadharID)==12:
             # Creating cursor
             cur = conn.cursor()
             # Executing Query
@@ -55,42 +55,52 @@ def getOTP():
 # verifyOTP - Return Success Message if OTP sent by the user is correct
 @app.route('/api/verifyOTP', methods=['GET', 'POST'])
 def verifyOTP():
-    data = request.get_json()
+    if request.method == 'POST':
+        data = request.get_json()
+        res = {}
     
-    aadharID = data["aadharID"]
-    OTP = data["OTP"]
+        aadharID = data["aadharID"]
+        OTP = data["OTP"]
 
-    if OTP=='123456':
-    	res = {
-    		"status" : "success",
-    	}
-    	return jsonify(res)
+        if OTP=='123456':
+            res["status"] = "success"
+        else:
+            res["status"] = "failed"
+            res["message"] = "Incorrect OTP"
     else:
-    	res = {
-    		"status" : "failed",
-    		"message" : "Incorrect Aadhar OTP"
-    	}
-    	return jsonify(res)
+        res["status"]="failed"
+        res['message']='Invalid Request Method'
+    return jsonify(res)
 
 # Register - Register the User and send Success Message
 @app.route('/api/register', methods=['GET', 'POST'])
 def register():
-    data = request.get_json()
-    
-    aadharID = data['aadharID']
-    password = data['password']
+    if reques.method == 'POST':
+        data = request.get_json()
+        
+        res = {}
+        aadharID = data['aadharID']
+        password = data['password']
 
-    if True:
-    	res = {
-    		"status" : "success"
-    	}
-    	return jsonify(res)
+        # Creating cursor
+        cur = conn.cursor()
+        # Executing Query
+        cur.execute("INSERT INTO user_all VALUES(%s,%s,%s,%s,%s)",[aadharID,password,name,contactNo,'registered'])
+
+        # Generate Response
+        res["status"]="success"
+
+        # Commiting the Changes
+        conn.commit()
+
+        # Closing the cursor
+        cur.close()
+
     else:
-    	res = {
-    		"status" : "failed",
-    		"message" : "Something went wrong, cannot register the user"
-    	}
-    	return jsonify(res)
+        res["status"]="failed"
+        res["message"]="Invalid Request Method"
+
+    return jsonify(res)
 
 # Login - Get Credentioals and Return User Information
 @app.route('/api/login', methods=['GET', 'POST'])
