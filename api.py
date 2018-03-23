@@ -22,16 +22,16 @@ def getOTP():
         # Receiving Aadhar ID
         aadharID = request.get_json()['aadharID']
         
-        if len(aadharID)==12:
+        if len(aadharID)==13:
             # Creating cursor
             cur = conn.cursor()
             # Executing Query
-            cur.execute("SELECT aadhar_id FROM users_all WHERE aadhar_id = %s",[aadharID])
+            cur.execute("SELECT aadhar_id FROM user_all WHERE aadhar_id = %s",[aadharID])
 
             # Fetching Data
-            data = cur.fetchone()
+            data = cur.fetchall()
 
-            if (data):
+            if len(data)>0:
                 res["status"]="failed"
                 res['message']="Aadhar ID is already registered"
             else:
