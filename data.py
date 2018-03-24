@@ -2761,12 +2761,4 @@ aadharData = {
         "contact_no": "10546471385",
         "name": "James Young"
     }
-
-
-
-
-
-
-
-
 }

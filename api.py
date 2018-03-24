@@ -31,19 +31,25 @@ def getOTP():
                 cur.execute("SELECT aadhar_id FROM user_all WHERE aadhar_id = %s",[aadharID])
             except:
                 conn.rollback()
-                res["status"]="failed"
-                res['message']="Something went wrong"
+                res = {
+                    "status" : "failed",
+                    "message" : "Something went wrong"
+                }
                 return jsonify(res)
 
             # Fetching Data
             data = cur.fetchall()
 
-            if len(data)>0:
-                res["status"]="failed"
-                res['message']="Aadhar ID is already registered"
+            if data:
+                res = {
+                    "status" : "failed",
+                    "message" : "Aadhar ID is already registered"
+                }
             else:
                 # Generating Response
-                res["status"]="success"
+                res = {
+                    "status" : "success"
+                }
 
             # Commiting the Changes
             conn.commit()
@@ -51,11 +57,15 @@ def getOTP():
             # Closing the cursor
             cur.close()
         else:
-            res["status"]="failed"
-            res['message']="Incorrect Aadhar ID"
+            res = {
+                "status" : "failed",
+                "message" : "Incorrect Aadhar ID"
+            }
     else:
-        res["status"]="failed"
-        res["message"]="Invalid Request Method"
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
 
     return jsonify(res)
 
@@ -70,10 +80,14 @@ def verifyOTP():
         OTP = data["OTP"]
 
         if OTP=='123456':
-            res["status"] = "success"
+            res = {
+                "status" : "success"
+            }
         else:
-            res["status"] = "failed"
-            res["message"] = "Incorrect OTP"
+            res = {
+                "status" : "failed",
+                "message" : "Incorrect OTP"
+            }
     else:
         res["status"]="failed"
         res["message"]="Invalid Request Method"
@@ -99,12 +113,16 @@ def register():
             cur.execute("INSERT INTO user_all VALUES(%s,%s,%s,%s,%s)",[aadharID, password, name, contactNo,'REGISTERED'])
         except:
             conn.rollback()
-            res["status"]="failed"
-            res['message']="Something went wrong"
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong"
+            }
             return jsonify(res)
 
         # Generate Response
-        res["status"]="success"
+        res = {
+            "status" : "success"
+        }
 
         # Commiting the Changes
         conn.commit()
@@ -113,76 +131,93 @@ def register():
         cur.close()
 
     else:
-        res["status"]="failed"
-        res["message"]="Invalid Request Method"
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
 
     return jsonify(res)
 
 # Login - Get Credentioals and Return User Information
 @app.route('/api/login', methods=['GET', 'POST'])
 def login():
-    res={}
-    data = request.get_json()
-    
-    aadharID = data['aadharID']
-    password_candidate = data['password']
+    if request.method == 'POST':
+        data = request.get_json()
+        
+        aadharID = data['aadharID']
+        password_candidate = data['password']
 
-    # Creating cursor
-    cur = conn.cursor()
-    # Executing Query
-    try:
-        cur.execute("SELECT password,user_status,name FROM user_all WHERE aadhar_id = %s",[aadharID])
-    except:
-        conn.rollback()
-        res["status"]="failed"
-        res['message']="Something went wrong"
-        return jsonify(res)
+        # Creating cursor
+        cur = conn.cursor()
+        # Executing Query
+        try:
+            cur.execute("SELECT password,user_status,name FROM user_all WHERE aadhar_id = %s",[aadharID])
+        except:
+            conn.rollback()
+            res["status"]="failed"
+            res['message']="Something went wrong"
+            return jsonify(res)
 
-    # Generate Response
-    data = cur.fetchone()
+        # Generate Response
+        data = cur.fetchone()
 
-    # Commiting the Changes
-    conn.commit()
+        # Commiting the Changes
+        conn.commit()
 
-    # Closing the cursor
-    cur.close()
+        # Closing the cursor
+        cur.close()
 
-    res={}
+        res={}
 
-    if data:
-        # Compare Passwords
-        if password_candidate == data[0]:
-            res["status"] = "success"
-            res["aadharID"] = aadharID
-            res["name"] = data[2]
-            res["userStatus"] = data[1]
+        if data:
+            # Compare Passwords
+            if password_candidate == data[0]:
+                res = {
+                    "status" : "success",
+                    "aadharID" : aadharID,
+                    "name" : data[2],
+                    "userStatus" : data[1]
+                }
+            else:
+                res = {
+                    "status" : "failed",
+                    "message" : "Invalid Login"
+                }
         else:
-            res["status"] = "failed"
-            res["message"] = "Invalid Login"
-        # Close connection
+                res = {
+                    "status" : "failed",
+                    "message" : "Aadhar not Registered"
+                }
     else:
-            res["status"] = "failed",
-            res["message"] = "Aadhar not Registered"
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
     return jsonify(res)
 
 # CheckNotification - Check If user has any new notification
 @app.route('/api/checkNotification', methods=['GET', 'POST'])
 def checkNotification():
-    data = request.get_json()
+    if request.method == 'POST':
+        data = request.get_json()
 
-    aadharID = data['aadharID']
-    
-    if True:
-    	res = {
-    		"status" : "success",
-    		"type" : "success",	# success, warning or danger
-    		"body" : "message body",
-    		"link" : "http://google.com"
-    	}
-    	return jsonify(res)
+        aadharID = data['aadharID']
+        
+        if True:
+        	res = {
+        		"status" : "success",
+        		"type" : "success",	# success, warning or danger
+        		"body" : "message body",
+        		"link" : "http://google.com"
+        	}
+        else:
+        	res = {
+        		"status" : "failed",
+        		"message" : "No New Notification"
+        	}
     else:
-    	res = {
-    		"status" : "failed",
-    		"message" : "No New Notification"
-    	}
-    	return jsonify(res)
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
+    return jsonify(res)
