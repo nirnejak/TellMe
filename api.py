@@ -3,7 +3,6 @@ from flask import request
 from flask import jsonify
 
 import psycopg2 as pg2
-from passlib.hash import sha256_crypt
 
 # Importing the Application Modules
 from app import app
@@ -131,8 +130,8 @@ def login():
 
     res={}
 
-    if len(data)>0:
-        # Compate Passwords
+    if data:
+        # Compare Passwords
         if password_candidate == data[0]:
             res["status"] = "success"
             res["aadharID"] = "aadharID"
