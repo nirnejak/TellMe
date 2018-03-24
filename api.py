@@ -24,7 +24,7 @@ def getOTP():
         # Receiving Aadhar ID
         aadharID = request.get_json()['aadharID']
         
-        if len(aadharID)==12:
+        if len(aadharID)==12 and aadharID in aadharData:
             # Creating cursor
             cur = conn.cursor()
             # Executing Query
@@ -113,32 +113,47 @@ def login():
     data = request.get_json()
     
     aadharID = data['aadharID']
-    password = data['password']
+    password_candidate = data['password']
 
-    if True:
-        if True:
-            res = {
-                "status" : "success"
-            }
-            return jsonify(res)
+    # Creating cursor
+    cur = conn.cursor()
+    # Executing Query
+    cur.execute("SELECT password,user_status,name FROM user_all WHERE aadhar_id = %s",[aadharID])
+
+    # Generate Response
+    data = cur.fetchone()
+
+    # Commiting the Changes
+    conn.commit()
+
+    # Closing the cursor
+    cur.close()
+
+    res={}
+
+    if len(data)>0:
+        # Compate Passwords
+        if password_candidate == data[0]:
+            res["status"] = "success"
+            res["aadharID"] = "aadharID"
+            res["name"] = data[2]
+            res["userStatus"] = data[1]
         else:
-            res = {
-                "status" : "failed",
-                "message" : "Incorrect Password"
-            }
-        return jsonify(res)
+            res["status"] = "failed"
+            res["message"] = "Invalid Login"
+        # Close connection
     else:
-        res = {
-            "status" : "failed",
-            "message" : "Aadhar not Registered"
-        }
-        return jsonify(res)
-
+            res["status"] = "failed",
+            res["message"] = ["Aadhar not Registered"]
+    return jsonify(res)
 
 # CheckNotification - Check If user has any new notification
 @app.route('/api/checkNotification', methods=['GET', 'POST'])
 def checkNotification():
     data = request.get_json()
+
+    aadharID = data['aadharID']
+    
     if True:
     	res = {
     		"status" : "success",
