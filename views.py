@@ -43,11 +43,6 @@ def user():
 def message():
     return render_template('message.html')
 
-# Typography Section
-@app.route('/typography', methods=['GET', 'POST'])
-def typography():
-    return render_template('typography.html')
-
 # User Settings Section
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
