@@ -27,7 +27,13 @@ def getOTP():
             # Creating cursor
             cur = conn.cursor()
             # Executing Query
-            cur.execute("SELECT aadhar_id FROM user_all WHERE aadhar_id = %s",[aadharID])
+            try:
+                cur.execute("SELECT aadhar_id FROM user_all WHERE aadhar_id = %s",[aadharID])
+            except:
+                conn.rollback()
+                res["status"]="failed"
+                res['message']="Something went wrong"
+                return jsonify(res)
 
             # Fetching Data
             data = cur.fetchall()
@@ -89,7 +95,13 @@ def register():
         # Creating cursor
         cur = conn.cursor()
         # Executing Query
-        cur.execute("INSERT INTO user_all VALUES(%s,%s,%s,%s,%s)",[aadharID, password, name, contactNo,'REGISTERED'])
+        try:
+            cur.execute("INSERT INTO user_all VALUES(%s,%s,%s,%s,%s)",[aadharID, password, name, contactNo,'REGISTERED'])
+        except:
+            conn.rollback()
+            res["status"]="failed"
+            res['message']="Something went wrong"
+            return jsonify(res)
 
         # Generate Response
         res["status"]="success"
@@ -117,7 +129,13 @@ def login():
     # Creating cursor
     cur = conn.cursor()
     # Executing Query
-    cur.execute("SELECT password,user_status,name FROM user_all WHERE aadhar_id = %s",[aadharID])
+    try:
+        cur.execute("SELECT password,user_status,name FROM user_all WHERE aadhar_id = %s",[aadharID])
+    except:
+        conn.rollback()
+        res["status"]="failed"
+        res['message']="Something went wrong"
+        return jsonify(res)
 
     # Generate Response
     data = cur.fetchone()
