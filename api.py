@@ -121,6 +121,7 @@ def register():
 # Login - Get Credentioals and Return User Information
 @app.route('/api/login', methods=['GET', 'POST'])
 def login():
+    res={}
     data = request.get_json()
     
     aadharID = data['aadharID']
