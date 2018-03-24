@@ -134,7 +134,7 @@ def login():
         # Compare Passwords
         if password_candidate == data[0]:
             res["status"] = "success"
-            res["aadharID"] = "aadharID"
+            res["aadharID"] = aadharID
             res["name"] = data[2]
             res["userStatus"] = data[1]
         else:
@@ -143,7 +143,7 @@ def login():
         # Close connection
     else:
             res["status"] = "failed",
-            res["message"] = ["Aadhar not Registered"]
+            res["message"] = "Aadhar not Registered"
     return jsonify(res)
 
 # CheckNotification - Check If user has any new notification
