@@ -228,7 +228,7 @@ def checkNotification():
     return jsonify(res)
 
 # Feed Farm Data
-@app.route('/feedFarmData', methods=['GET', 'POST'])
+@app.route('/api/feedFarmData', methods=['GET', 'POST'])
 def feedFarmData():
     if request.method == 'POST':
         data = request.get_json()
@@ -265,7 +265,7 @@ def feedFarmData():
     return jsonify(res)
 
 # Get Farm List - Return List of Farms associated to a particular user
-@app.route('/getFarmList', methods=['GET', 'POST'])
+@app.route('/api/getFarmList', methods=['GET', 'POST'])
 def getFarmList():
     if request.method == 'POST':
         data = request.get_json()
@@ -301,7 +301,7 @@ def getFarmList():
     return jsonify(res)
 
 # Feed Crop Details
-@app.route('/feedCropData', methods=['GET', 'POST'])
+@app.route('/api/feedCropData', methods=['GET', 'POST'])
 def feedCropData():
     if request.method == 'POST':
         data = request.get_json()
@@ -335,7 +335,7 @@ def feedCropData():
         }
     return jsonify(res)
 # Get Crop List - Return List of Crops associated to a particular user
-@app.route('/getCropList', methods=['GET', 'POST'])
+@app.route('/api/getCropList', methods=['GET', 'POST'])
 def getCropList():
     if request.method == 'POST':
         data = request.get_json()
@@ -372,7 +372,7 @@ def getCropList():
     return jsonify(res)
 
 # Feed Irrigation Details
-@app.route('/feedIrrigationData', methods=['GET', 'POST'])
+@app.route('/api/feedIrrigationData', methods=['GET', 'POST'])
 def feedIrrigationData():
     if request.method == 'POST':
         data = request.get_json()
