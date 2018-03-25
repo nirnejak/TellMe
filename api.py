@@ -106,8 +106,15 @@ def register():
         password = data['password']
 
         # Fetching from Aadhar
-        contactNo = aadharData[aadharID]['contact_no']
-        name = aadharData[aadharID]['name']
+        try:
+            contactNo = aadharData[aadharID]['contact_no']
+            name = aadharData[aadharID]['name']
+        except:
+            res = {
+                "status" : "failed",
+                "message" : "Invalid Aadhar ID"
+            }
+            return jsonify(res)
 
         # Creating cursor
         cur = conn.cursor()
