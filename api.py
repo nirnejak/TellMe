@@ -26,6 +26,7 @@ def getOTP():
         if len(aadharID)==12 and aadharID in aadharData:
             # Creating cursor
             cur = conn.cursor()
+            
             # Executing Query
             try:
                 cur.execute("SELECT aadhar_id FROM user_all WHERE aadhar_id = %s",[aadharID])
@@ -89,8 +90,10 @@ def verifyOTP():
                 "message" : "Incorrect OTP"
             }
     else:
-        res["status"]="failed"
-        res["message"]="Invalid Request Method"
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
     return jsonify(res)
 
 # Register - Register the User and send Success Message
@@ -99,10 +102,10 @@ def register():
     if request.method == 'POST':
         data = request.get_json()
         
-        res = {}
         aadharID = data['aadharID']
         password = data['password']
 
+        # Fetching from Aadhar
         contactNo = aadharData[aadharID]['contact_no']
         name = aadharData[aadharID]['name']
 
@@ -243,15 +246,16 @@ def feedFarmData():
             res["status"]="failed"
             res['message']="Something went wrong"
             return jsonify(res)
-
-        # Generate Response
-        data = cur.fetchone()
-
+        
         # Commiting the Changes
         conn.commit()
 
         # Closing the cursor
         cur.close()
+
+        res = {
+            "status" : "success"
+        }
         '''
     else:
         res = {
@@ -289,13 +293,12 @@ def getFarmList():
         # Closing the cursor
         cur.close()
         '''
-        return jsonify(res)
     else:
         res = {
             "status" : "failed",
             "message" : "Invalid Request Method"
         }
-
+    return jsonify(res)
 
 # Feed Crop Details
 @app.route('/feedCropData', methods=['GET', 'POST'])
@@ -374,6 +377,31 @@ def feedIrrigationData():
     if request.method == 'POST':
         data = request.get_json()
         res = data
+
+        '''
+         # Get aadharID
+        aadharID = data["aadharID"]
+
+         # Creating cursor
+        cur = conn.cursor()
+        # Executing Query
+        try:
+            cur.execute("SELECT crop_id, crop_name, crop_info FROM crops WHERE aadhar_is = %s",[aadharID])
+        except:
+            conn.rollback()
+            res["status"]="failed"
+            res['message']="Something went wrong"
+            return jsonify(res)
+
+        # Generate Response
+        data = cur.fetchone()
+
+        # Commiting the Changes
+        conn.commit()
+
+        # Closing the cursor
+        cur.close()
+        '''
     else:
         res = {
             "status" : "failed",
