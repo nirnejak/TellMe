@@ -269,6 +269,7 @@ def feedFarmData():
 def getFarmList():
     if request.method == 'POST':
         data = request.get_json()
+        res = data
         # Get aadharID
         aadharID = data["aadharID"]
 
