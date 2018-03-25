@@ -167,8 +167,6 @@ def login():
         # Closing the cursor
         cur.close()
 
-        res={}
-
         if data:
             # Compare Passwords
             if password_candidate == data[0]:
@@ -195,6 +193,10 @@ def login():
         }
     return jsonify(res)
 
+
+
+
+
 # CheckNotification - Check If user has any new notification
 @app.route('/api/checkNotification', methods=['GET', 'POST'])
 def checkNotification():
@@ -215,6 +217,163 @@ def checkNotification():
         		"status" : "failed",
         		"message" : "No New Notification"
         	}
+    else:
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
+    return jsonify(res)
+
+# Feed Farm Data
+@app.route('/feedFarmData', methods=['GET', 'POST'])
+def feedFarmData():
+    if request.method == 'POST':
+        data = request.get_json()
+        res = data
+
+        '''
+        # Creating cursor
+        cur = conn.cursor()
+        # Executing Query
+        
+        try:
+            cur.execute("%s",[aadharID])
+        except:
+            conn.rollback()
+            res["status"]="failed"
+            res['message']="Something went wrong"
+            return jsonify(res)
+
+        # Generate Response
+        data = cur.fetchone()
+
+        # Commiting the Changes
+        conn.commit()
+
+        # Closing the cursor
+        cur.close()
+        '''
+    else:
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
+    return jsonify(res)
+
+# Get Farm List - Return List of Farms associated to a particular user
+@app.route('/getFarmList', methods=['GET', 'POST'])
+def getFarmList():
+    if request.method == 'POST':
+        data = request.get_json()
+        # Get aadharID
+        aadharID = data["aadharID"]
+
+        '''
+         # Creating cursor
+        cur = conn.cursor()
+        # Executing Query
+        try:
+            cur.execute("%s",[aadharID])
+        except:
+            conn.rollback()
+            res["status"]="failed"
+            res['message']="Something went wrong"
+            return jsonify(res)
+
+        # Generate Response
+        data = cur.fetchone()
+
+        # Commiting the Changes
+        conn.commit()
+
+        # Closing the cursor
+        cur.close()
+        '''
+        return jsonify(res)
+    else:
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
+
+
+# Feed Crop Details
+@app.route('/feedCropData', methods=['GET', 'POST'])
+def feedCropData():
+    if request.method == 'POST':
+        data = request.get_json()
+        res = data
+        '''
+         # Creating cursor
+        cur = conn.cursor()
+        # Executing Query
+        try:
+            cur.execute("%s",[aadharID])
+        except:
+            conn.rollback()
+            res["status"]="failed"
+            res['message']="Something went wrong"
+            return jsonify(res)
+
+        # Generate Response
+        data = cur.fetchone()
+
+        # Commiting the Changes
+        conn.commit()
+
+        # Closing the cursor
+        cur.close()
+
+        '''
+    else:
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
+    return jsonify(res)
+# Get Crop List - Return List of Crops associated to a particular user
+@app.route('/getCropList', methods=['GET', 'POST'])
+def getCropList():
+    if request.method == 'POST':
+        data = request.get_json()
+        res = data
+        '''
+        # Get aadharID
+        aadharID = data["aadharID"]
+
+         # Creating cursor
+        cur = conn.cursor()
+        # Executing Query
+        try:
+            cur.execute("SELECT crop_id, crop_name, crop_info FROM crops WHERE aadhar_is = %s",[aadharID])
+        except:
+            conn.rollback()
+            res["status"]="failed"
+            res['message']="Something went wrong"
+            return jsonify(res)
+
+        # Generate Response
+        data = cur.fetchone()
+
+        # Commiting the Changes
+        conn.commit()
+
+        # Closing the cursor
+        cur.close()
+        '''
+    else:
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
+    return jsonify(res)
+
+# Feed Irrigation Details
+@app.route('/feedIrrigationData', methods=['GET', 'POST'])
+def feedIrrigationData():
+    if request.method == 'POST':
+        data = request.get_json()
+        res = data
     else:
         res = {
             "status" : "failed",

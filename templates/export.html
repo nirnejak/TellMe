@@ -5,8 +5,33 @@
                 <h4 class="card-title">Export Data</h4>
             </div>
             <div class="card-body">
-                
+            	<label for="dateFrom">Date From</label>
+                <input type="date" name="dateFrom" id="dateFrom">
+                <label for="dateTo">Date To</label>
+                <input type="date" name="dataTo" id="dataTo">
+                <label for="dateTo">State</label>
+                <select name="state">
+                	<option value="">All</option>
+                	{% for state in stateData %}
+                		<option value="">{{ state }}</option>
+                	{% endfor%}
+                </select>
+                <select name="district">
+                    {% for state in stateData %}
+                        {% for data in state %}
+                	       <option value=""></option>
+                        {% endfor %}
+                    {% endfor %}
+                </select>
             </div>
         </div>
     </div>
 </div>
+
+<!-- DateFrom -->
+<!-- DateTo -->
+<!-- State -->
+<!-- District -->
+<!-- CropType -->
+<!-- Crop -->
+<!-- Irrigation Source -->

@@ -1,10 +1,12 @@
 # Librarys
+from flask import request
 from flask import render_template
 from flask import url_for
 from flask import redirect
 
 # Importing the Application Modules
 from app import app
+from data import stateData
 
 # Views
 
@@ -31,7 +33,7 @@ def geomaps():
 # Export Data Section
 @app.route('/export', methods=['GET', 'POST'])
 def export():
-    return render_template('export.html')
+    return render_template('export.html', stateData = stateData)
 
 # User Management Section
 @app.route('/user', methods=['GET', 'POST'])

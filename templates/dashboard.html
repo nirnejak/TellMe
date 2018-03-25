@@ -247,10 +247,11 @@
 <script src="{{ url_for('static', filename='js/now-ui-dashboard.js') }}"></script>
 
 <script src="{{ url_for('static', filename='tellme/tellme.js') }}"></script>
+<script src="{{ url_for('static', filename='tellmecharts.js') }}"></script>
 <script>
     $(document).ready(function() {
         // Javascript method's body can be found in assets/js/tellme.js
-        tellme.initDashboardPageCharts();
+       tellme.initDashboardPageCharts();
     });
 
     function showDiv(dir){

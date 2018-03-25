@@ -426,7 +426,7 @@ tellme = {
     },
 
     initGoogleMaps: function(){
-        var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
+        var myLatlng = new google.maps.LatLng(21.2107, 81.3274);
         var mapOptions = {
           zoom: 13,
           center: myLatlng,
