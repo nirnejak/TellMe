@@ -3,12 +3,15 @@ from flask import request
 from flask import jsonify
 
 import psycopg2 as pg2
-
+import psycopg2.extras as pgext
 # Importing the Application Modules
 from app import app
-from data import aadharData
+
+# Importing Personal Libraries  
+
 
 from libs.geo_area_code import find_geo_area_code
+from libs.data import aadharData
 
 
 # Connecting to database
@@ -309,12 +312,11 @@ def getFarmList():
         # Get aadharID
         aadharID = data["aadharID"]
 
-
         # Creating cursor
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory = pgext.DictCursor)
         # Executing Query
         try:
-            cur.execute("%s",[aadharID])
+            cur.execute("SELECT farm_id, farm_name FROM farm WHERE belongs_to = %s",[aadharID])
         except:
             conn.rollback()
             res["status"]="failed"
@@ -322,7 +324,7 @@ def getFarmList():
             return jsonify(res)
 
         # Generate Response
-        data = cur.fetchone()
+        data = cur.fetchall()
 
         # Commiting the Changes
         conn.commit()
@@ -330,6 +332,7 @@ def getFarmList():
         # Closing the cursor
         cur.close()
 
+        return jsonify(data)
     else:
         res = {
             "status" : "failed",
