@@ -188,7 +188,6 @@ def login():
                     "status" : "success",
                     "aadharID" : aadharID,
                     "name" : dataRecieved['name'],
-                    "userStatus" : data['message_broadcast']
                 }
             else:
                 res = {
