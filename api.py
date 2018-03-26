@@ -162,10 +162,10 @@ def login():
         password_candidate = data['password']
 
         # Creating cursor
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=pgext.DictCursor)
         # Executing Query
         try:
-            cur.execute("SELECT password,name FROM users WHERE aadhar_id = %s AND user_type = 'FARMER';",[aadharID])
+            cur.execute("SELECT password, name, message_broadcast FROM users WHERE aadhar_id = %s  AND user_type = 'FARMER';",[aadharID])
         except:
             conn.rollback()
             res["status"]="failed"
@@ -173,7 +173,7 @@ def login():
             return jsonify(res)
 
         # Generate Response
-        data = cur.fetchone()
+        dataRecieved = cur.fetchone()
 
         # Commiting the Changes
         conn.commit()
@@ -183,12 +183,12 @@ def login():
 
         if data:
             # Compare Passwords
-            if password_candidate == data[0]:
+            if password_candidate == dataRecieved['password']:
                 res = {
                     "status" : "success",
                     "aadharID" : aadharID,
-                    "name" : data[2],
-                    "userStatus" : data[1]
+                    "name" : dataRecieved['name'],
+                    "userStatus" : data['message_broadcast']
                 }
             else:
                 res = {
