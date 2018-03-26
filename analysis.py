@@ -16,6 +16,40 @@ conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca
 
 
 # Views
-@app.route('/fetchDB', method = ['GET','POST'])
+# SyncDB - Copy Necessory Files from General Database and Copy them to Analysis Database
+@app.route('/syncDB', methods = ['GET','POST'])
+def syndDB():
+	if request.method == 'POST':
+		pass
+	else:
+		res = {
+			"status":"success"
+		}
+	return jsonify(res)
+
+# OptimizeDB - Copy Necessory Files from General Database and Copy them to Analysis Database
+@app.route('/optmizeDB', methods = ['GET','POST'])
+def optimizeDB():
+	if request.method == 'POST':
+		pass
+	else:
+		res = {
+			"status":"success"
+		}
+	return jsonify(res)
+
+# FetchDB - Returns raw Data in JSON Format based on arguments passed through request.
+@app.route('/fetchDB', methods = ['GET','POST'])
 def fetchDB():
-	return "Hi there"
+	if request.method == 'POST':
+		data = request.get_json()
+		res = {
+			"status":"success"
+		}
+	else:
+		res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
+
+	return jsonify(res)

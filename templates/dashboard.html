@@ -271,7 +271,7 @@
 	            if($("#bigDashboardChart").length){
 	                $(".panel-header").html('');
 	                $(".panel-header").removeClass('panel-header-lg');
-	                $(".panel-header").addClass('panel-header-sm');
+	                $(".panel-header").html("<div class=\"header text-center\"><h2 class=\"title\" style=\"text-transform: uppercase;\">"+dir+"</h2><p class=\"category\">Hello</p></div>");
 	            }
         	})
         	.fail(function( jqXHR, textStatus, errorThrown ) {

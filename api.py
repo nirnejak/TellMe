@@ -8,6 +8,8 @@ import psycopg2 as pg2
 from app import app
 from data import aadharData
 
+from libs.geo_area_code import find_geo_area_code
+
 
 # Connecting to database
 conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca5e14e8dcc20b2a4bcb4bee2227e5b44cc02f488fba40240d1764c4ac750ca",host="ec2-23-21-217-27.compute-1.amazonaws.com",port="5432")
@@ -29,7 +31,7 @@ def getOTP():
             
             # Executing Query
             try:
-                cur.execute("SELECT aadhar_id FROM user_all WHERE aadhar_id = %s",[aadharID])
+                cur.execute("SELECT aadhar_id FROM users WHERE aadhar_id = %s;",[aadharID])
             except:
                 conn.rollback()
                 res = {
@@ -75,7 +77,6 @@ def getOTP():
 def verifyOTP():
     if request.method == 'POST':
         data = request.get_json()
-        res = {}
     
         aadharID = data["aadharID"]
         OTP = data["OTP"]
@@ -120,7 +121,7 @@ def register():
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("INSERT INTO user_all VALUES(%s,%s,%s,%s,%s)",[aadharID, password, name, contactNo,'REGISTERED'])
+            cur.execute("INSERT INTO users(aadhar_id,password,name,contact_no) VALUES(%s,%s,%s,%s,%s);",[aadharID, password, name, contactNo])
         except:
             conn.rollback()
             res = {
@@ -161,7 +162,7 @@ def login():
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("SELECT password,user_status,name FROM user_all WHERE aadhar_id = %s",[aadharID])
+            cur.execute("SELECT password,name FROM users WHERE aadhar_id = %s AND user_type = 'FARMER';",[aadharID])
         except:
             conn.rollback()
             res["status"]="failed"
@@ -215,12 +216,29 @@ def checkNotification():
 
         aadharID = data['aadharID']
         
-        if True:
+        # Creating cursor
+        cur = conn.cursor()
+        # Executing Query
+        try:
+            cur.execute("SELECT message_broadcast FROM users WHERE aadhar_id = %s AND user_type = 'FARMER';",[aadharID])
+        except:
+            conn.rollback()
+            res["status"]="failed"
+            res['message']="Something went wrong"
+            return jsonify(res)
+
+        # Generate Response
+        data = cur.fetchone()
+
+        # Closing the cursor
+        cur.close()
+
+        if data:
         	res = {
         		"status" : "success",
-        		"type" : "success",	# success, warning or danger
-        		"body" : "message body",
-        		"link" : "http://google.com"
+        		"type" : data["type"],	# success, warning or danger
+        		"body" : data["body"],
+        		"link" : data["link"]
         	}
         else:
         	res = {
@@ -239,15 +257,26 @@ def checkNotification():
 def feedFarmData():
     if request.method == 'POST':
         data = request.get_json()
-        res = data
 
-        '''
+        # Getting Data
+        farmName = data['farmName']
+        belongs_to = data['aadharID']
+        longitude = data['longitude']
+        latitude = data['latitude']
+        geoareaCode = find_geo_area_code(longitude, latitude)
+        state = data['state']
+        district = data['district']
+        city = data['city']
+        landArea = data['landArea']
+        groundWaterLevel = data['groundWaterLevel']
+        soilType = data['soilType']
+
         # Creating cursor
         cur = conn.cursor()
         # Executing Query
         
         try:
-            cur.execute("%s",[aadharID])
+            cur.execute("INSERT INTO farm(farm_name, belongs_to, geoarea_code, longitude, latitude, state, district, city, land_area, groundwater_level, soil_type) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",(farmName, belongs_to, geoareaCode, longitude, latitude, state, district, city, landArea, groundWaterLevel, soilType))
         except:
             conn.rollback()
             res["status"]="failed"
@@ -263,7 +292,7 @@ def feedFarmData():
         res = {
             "status" : "success"
         }
-        '''
+
     else:
         res = {
             "status" : "failed",
@@ -280,8 +309,8 @@ def getFarmList():
         # Get aadharID
         aadharID = data["aadharID"]
 
-        '''
-         # Creating cursor
+
+        # Creating cursor
         cur = conn.cursor()
         # Executing Query
         try:
@@ -300,7 +329,7 @@ def getFarmList():
 
         # Closing the cursor
         cur.close()
-        '''
+
     else:
         res = {
             "status" : "failed",
