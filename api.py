@@ -278,7 +278,7 @@ def feedFarmData():
         # Executing Query
         
         try:
-            cur.execute("INSERT INTO farm(farm_name, belongs_to, geoarea_code, longitude, latitude, state, district, city, land_area, groundwater_level, soil_type) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",(farmName, belongs_to, geoareaCode, longitude, latitude, state, district, city, landArea, groundWaterLevel, soilType))
+            cur.execute("INSERT INTO farm(farm_name, belongs_to, geo_area_code, longitude, latitude, state, district, city, land_area, groundwater_level, soil_type) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",(farmName, belongs_to, geoareaCode, longitude, latitude, state, district, city, landArea, groundWaterLevel, soilType))
         except:
             conn.rollback()
             res = {

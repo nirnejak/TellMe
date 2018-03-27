@@ -16,7 +16,7 @@ CREATE TABLE farm (
 	farm_registration_date DATE DEFAULT now()::DATE,
 	farm_status BOOLEAN DEFAULT TRUE,
 
-	geoarea_code TEXT,
+	geo_area_code TEXT,
 	longitude DECIMAL(10,7),
 	latitude DECIMAL(10,7),
 	state TEXT,
