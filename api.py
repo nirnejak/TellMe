@@ -307,41 +307,46 @@ def feedFarmData():
 # Get Farm List - Return List of Farms associated to a particular user
 @app.route('/api/getFarmList', methods=['GET', 'POST'])
 def getFarmList():
-    if request.method == 'POST':
-        data = request.get_json()
-        res = data
-        # Get aadharID
-        aadharID = data["aadharID"]
+	if request.method == 'POST':
+		data = request.get_json()
+		# Get aadharID
+		aadharID = data["aadharID"]
 
-        # Creating cursor
-        cur = conn.cursor(cursor_factory = pgext.DictCursor)
-        # Executing Query
-        try:
-            cur.execute("SELECT farm_id, farm_name FROM farm WHERE belongs_to = %s",[aadharID])
-        except:
-            conn.rollback()
-            res = {
-                "status" : "failed",
-                "message" : "Something went wrong"
-            }
-            return jsonify(res)
+		# Creating cursor
+		cur = conn.cursor(cursor_factory = pgext.DictCursor)
+		# Executing Query
+		try:
+			cur.execute("SELECT farm_id, farm_name FROM farm WHERE belongs_to = %s",[aadharID])
+		except:
+			conn.rollback()
+			res = {
+				"status" : "failed",
+				"message" : "Something went wrong"
+			}
+			return jsonify(res)
 
-        # Generate Response
-        data = cur.fetchall()
-
-        # Commiting the Changes
-        conn.commit()
-
-        # Closing the cursor
-        cur.close()
-
-        return jsonify(data)
-    else:
-        res = {
-            "status" : "failed",
-            "message" : "Invalid Request Method"
-        }
-    return jsonify(res)
+		# Generate Response
+		data = cur.fetchall()
+		
+		if data:
+			res = {
+				"status" : "success"
+			}
+			for i in data:
+				res[i['farm_name']] = i['farm_id']
+		else:
+			res = {
+				"status" : "failed",
+				"message" : "you don't have any farm"
+			}
+		# Closing the cursor
+		cur.close()
+	else:
+		res = {
+			"status" : "failed",
+			"message" : "Invalid Request Method"
+		}
+	return jsonify(res)
 
 # Feed Crop Details
 @app.route('/api/feedCropData', methods=['GET', 'POST'])
@@ -393,7 +398,7 @@ def getCropList():
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("SELECT crop_id, crop_name, crop_info FROM crops WHERE aadhar_is = %s",[aadharID])
+            cur.execute("SELECT crop_id, crop_name FROM crops WHERE belongs_to = %s",[aadharID])
         except:
             conn.rollback()
             res = {
