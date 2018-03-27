@@ -447,19 +447,17 @@ def getCropList():
 def feedIrrigationData():
     if request.method == 'POST':
         data = request.get_json()
-        res = data
+
         cropID = data['cropID']
         waterAmmount = data['waterAmmount']
         waterSource = data['waterSource']
 
-        
-         # Get aadharID
-
          # Creating cursor
         cur = conn.cursor()
+        
         # Executing Query
         try:
-            cur.execute("INSERT into irrigation(crop_id,water_ammount,water_source) values(%s,%s,%s)",[cropID,waterAmmount,waterSource])
+            cur.execute("INSERT into irrigation(crop_id,water_ammount,water_source) values(%s,%s,%s)",[cropID,waterAmount,waterSource])
         except:
             conn.rollback()
             res = {
@@ -467,9 +465,6 @@ def feedIrrigationData():
                 "message" : "Something went wrong"
             }
             return jsonify(res)
-
-        # Generate Response
-        data = cur.fetchall()
 
         # Commiting the Changes
         conn.commit()
