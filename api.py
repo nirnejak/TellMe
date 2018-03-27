@@ -124,7 +124,7 @@ def register():
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("INSERT INTO users(aadhar_id,password,name,contact_no) VALUES(%s,%s,%s,%s,%s);",[aadharID, password, name, contactNo])
+            cur.execute("INSERT INTO users(aadhar_id,password,name,contact_no) VALUES(%s,%s,%s,%s);",[aadharID, password, name, contactNo])
         except:
             conn.rollback()
             res = {
