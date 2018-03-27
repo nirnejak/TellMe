@@ -284,7 +284,6 @@ def feedFarmData():
             res = {
                 "status" : "failed",
                 "message" : "Something went wrong",
-                "error" : cur.statusmessage
             }
             return jsonify(res)
         
@@ -321,8 +320,10 @@ def getFarmList():
             cur.execute("SELECT farm_id, farm_name FROM farm WHERE belongs_to = %s",[aadharID])
         except:
             conn.rollback()
-            res["status"]="failed"
-            res['message']="Something went wrong"
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong"
+            }
             return jsonify(res)
 
         # Generate Response
@@ -356,8 +357,10 @@ def feedCropData():
             cur.execute("%s",[aadharID])
         except:
             conn.rollback()
-            res["status"]="failed"
-            res['message']="Something went wrong"
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong"
+            }
             return jsonify(res)
 
         # Generate Response
@@ -393,8 +396,10 @@ def getCropList():
             cur.execute("SELECT crop_id, crop_name, crop_info FROM crops WHERE aadhar_is = %s",[aadharID])
         except:
             conn.rollback()
-            res["status"]="failed"
-            res['message']="Something went wrong"
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong"
+            }
             return jsonify(res)
 
         # Generate Response
@@ -431,8 +436,10 @@ def feedIrrigationData():
             cur.execute("SELECT crop_id, crop_name, crop_info FROM crops WHERE aadhar_is = %s",[aadharID])
         except:
             conn.rollback()
-            res["status"]="failed"
-            res['message']="Something went wrong"
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong"
+            }
             return jsonify(res)
 
         # Generate Response
