@@ -263,8 +263,8 @@ def feedFarmData():
         # Getting Data
         farmName = data['farmName']
         belongs_to = data['aadharID']
-        longitude = data['longitude']
-        latitude = data['latitude']
+        longitude = float(data['longitude'])
+        latitude = float(data['latitude'])
         geoareaCode = find_geo_area_code(longitude, latitude)
         state = data['state']
         district = data['district']
@@ -281,8 +281,11 @@ def feedFarmData():
             cur.execute("INSERT INTO farm(farm_name, belongs_to, geoarea_code, longitude, latitude, state, district, city, land_area, groundwater_level, soil_type) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);",(farmName, belongs_to, geoareaCode, longitude, latitude, state, district, city, landArea, groundWaterLevel, soilType))
         except:
             conn.rollback()
-            res["status"]="failed"
-            res['message']="Something went wrong"
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong",
+                "error" : cur.statusmessage
+            }
             return jsonify(res)
         
         # Commiting the Changes
