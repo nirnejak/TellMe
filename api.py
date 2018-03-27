@@ -330,10 +330,11 @@ def getFarmList():
 		
 		if data:
 			res = {
-				"status" : "success"
+				"status" : "success",
+				"data" : {}
 			}
 			for i in data:
-				res[i['farm_name']] = i['farm_id']
+				res["data"][i['farm_id'] ]= i['farm_name']
 		else:
 			res = {
 				"status" : "failed",
