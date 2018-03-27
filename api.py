@@ -331,10 +331,10 @@ def getFarmList():
 		if data:
 			res = {
 				"status" : "success",
-				"data" : {}
+				"data" : []
 			}
 			for i in data:
-				res["data"][i['farm_id'] ]= i['farm_name']
+				res["data"].append({i['farm_id'] : i['farm_name']})
 		else:
 			res = {
 				"status" : "failed",
@@ -355,12 +355,18 @@ def feedCropData():
     if request.method == 'POST':
         data = request.get_json()
         res = data
-        '''
+        cropName = data['cropName']
+        aadharID = data['aadharID']
+        farmID = data['farmID']
+        seedID = data['seedID']
+        cropSeededAreaSize = data['cropSeededAreaSize']
+
+
          # Creating cursor
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("%s",[aadharID])
+            cur.execute("INSERT INTO crop(crop_name,belongs_to,farm_id,seed_id,crop_seeded_area_size) values(%s,%s,%s,%s,%s)",[cropName,aadharID,farmID,seedID,cropSeededAreaSize])
         except:
             conn.rollback()
             res = {
@@ -378,7 +384,7 @@ def feedCropData():
         # Closing the cursor
         cur.close()
 
-        '''
+        
     else:
         res = {
             "status" : "failed",
@@ -390,16 +396,15 @@ def feedCropData():
 def getCropList():
     if request.method == 'POST':
         data = request.get_json()
-        res = data
-        '''
+       
         # Get aadharID
         aadharID = data["aadharID"]
 
          # Creating cursor
-        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=pgext.DictCursor)
         # Executing Query
         try:
-            cur.execute("SELECT crop_id, crop_name FROM crops WHERE belongs_to = %s",[aadharID])
+            cur.execute("SELECT crop_id, crop_name FROM crop WHERE belongs_to = %s",[aadharID])
         except:
             conn.rollback()
             res = {
@@ -409,14 +414,27 @@ def getCropList():
             return jsonify(res)
 
         # Generate Response
-        data = cur.fetchone()
+        data = cur.fetchall()
+        
+        if data:
+            res = {
+                "status" : "success",
+                "data" : []
+            }
+            for i in data:
+                res["data"].append({i['crop_id'] : i['crop_name']})
+        else:
+            res = {
+                "status":"failed",
+                "message":"You don't have any Crops"
+            }
 
         # Commiting the Changes
         conn.commit()
 
         # Closing the cursor
         cur.close()
-        '''
+        
     else:
         res = {
             "status" : "failed",
@@ -430,16 +448,18 @@ def feedIrrigationData():
     if request.method == 'POST':
         data = request.get_json()
         res = data
+        cropID = data['cropID']
+        waterAmmount = data['waterAmmount']
+        waterSource = data['waterSource']
 
-        '''
+        
          # Get aadharID
-        aadharID = data["aadharID"]
 
          # Creating cursor
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("SELECT crop_id, crop_name, crop_info FROM crops WHERE aadhar_is = %s",[aadharID])
+            cur.execute("INSERT into irrigation(crop_id,water_ammount,water_source) values(%s,%s,%s)",[cropID,waterAmmount,waterSource])
         except:
             conn.rollback()
             res = {
@@ -449,14 +469,14 @@ def feedIrrigationData():
             return jsonify(res)
 
         # Generate Response
-        data = cur.fetchone()
+        data = cur.fetchall()
 
         # Commiting the Changes
         conn.commit()
 
         # Closing the cursor
         cur.close()
-        '''
+        
     else:
         res = {
             "status" : "failed",
