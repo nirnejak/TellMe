@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // Javascript method's body can be found in assets/js/tellme.js
-    new Chart(document.getElementById("chartjs-1"),{
+    new Chart(document.getElementById("dashboardChart-1"),{
             "type":"doughnut",
             "data":{
                 "labels":["Canal","Pump","River","Other"],
@@ -26,7 +26,7 @@ $(document).ready(function() {
             }
         }
     );
-    new Chart(document.getElementById("chartjs-2"),{
+    new Chart(document.getElementById("dashboardChart-2"),{
             "type":"pie",
             "data":{
                 "labels":["Canal","Pump","River","Other 1","Other 2","Other 3","Other 4"],
@@ -56,7 +56,7 @@ $(document).ready(function() {
             }
         }
     );
-    new Chart(document.getElementById("chartjs-3"),{
+    new Chart(document.getElementById("dashboardChart-3"),{
             type: 'bar',
             data: {
                 labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -93,7 +93,7 @@ $(document).ready(function() {
             }
         }
     );
-    new Chart(document.getElementById("chartjs-4"),{
+    new Chart(document.getElementById("dashboardChart-4"),{
             "type":"line",
             "data":{
                 "labels": ["January", "February", "March", "April", "May", "June", "July"],
@@ -246,7 +246,7 @@ $(document).ready(function() {
         }]
     };
 
-    var ctx = document.getElementById('chartjs-5').getContext('2d');
+    var ctx = document.getElementById('dashboardChart-5').getContext('2d');
     window.myScatter = Chart.Scatter(ctx, {
         data: scatterChartData,
         options: {
@@ -267,4 +267,3 @@ $(document).ready(function() {
             }
     });
 });
-

@@ -1,12 +1,84 @@
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Message Broadcast</h4>
-            </div>
-            <div class="card-body">
-                
-            </div>
+{% extends 'layout.html' %}
+
+
+{% block body %}
+	<div class="panel-header">
+        <div class="header text-center">
+            <h2 class="title">Message Broadcast</h2>
+            <p class="category">Deliver your Message to Millions of Farmers</p>
         </div>
     </div>
-</div>
+	<div class="content">
+		<div class="row">
+		    <div class="col-md-12">
+		        <div class="card">
+		            <div class="card-header">
+		                <h4 class="card-title">Message Broadcast</h4>
+		            </div>
+		            <div class="card-body">
+		                <div class="row">
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label>State</label>
+                                    <select name="state" class="form-control" id="state" required>
+                                        <option value="">All</option>
+                                        {% for state in data.stateData %}
+                                            <option value="{{ state }}">{{ state }}</option>
+                                        {% endfor%}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label>District</label>
+                                    <input type="text" placeholder="Enter District" name="district" class="form-control" id="district" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label>Crop</label>
+                                    <select name="state" class="form-control" id="state" required>
+                                        <option value="">All</option>
+                                        {% for state in data.stateData %}
+                                            <option value="{{ state }}">{{ state }}</option>
+                                        {% endfor%}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label>Irrigation Source</label>
+                                    <select name="state" class="form-control" id="state" required>
+                                        <option value="">All</option>
+                                        {% for state in data.stateData %}
+                                            <option value="{{ state }}">{{ state }}</option>
+                                        {% endfor%}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Message</label>
+                                    <textarea rows="4" cols="80" class="form-control" placeholder="Enter your message here"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Message Link</label>
+                                    <input type="text" class="form-control" placeholder="Enter Link for your message">
+                                </div>
+                            </div>
+                        </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+
+{% endblock %}

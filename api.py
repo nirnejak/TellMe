@@ -54,7 +54,8 @@ def getOTP():
             else:
                 # Generating Response
                 res = {
-                    "status" : "success"
+                    "status" : "success",
+                    "contactNo" : aadharData[aadharID]['contact_no']
                 }
 
             # Commiting the Changes
@@ -334,7 +335,7 @@ def getFarmList():
 				"data" : []
 			}
 			for i in data:
-				res["data"].append({i['farm_id'] : i['farm_name']})
+				res["data"].append({"farmID" : i['farm_id'], "farmName" : i['farm_name']})
 		else:
 			res = {
 				"status" : "failed",
@@ -422,7 +423,7 @@ def getCropList():
                 "data" : []
             }
             for i in data:
-                res["data"].append({i['crop_id'] : i['crop_name']})
+                res["data"].append({ "cropID" : i['crop_id'], "cropName" : i['crop_name']})
         else:
             res = {
                 "status":"failed",

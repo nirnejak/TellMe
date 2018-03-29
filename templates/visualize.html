@@ -1,337 +1,146 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'layout.html' %}
 
-<head>
-    <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ url_for('static', filename='img/apple-icon.png') }}">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>TellMe - Collect and Analyze Data</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-
-    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='css/now-ui-dashboard.css') }}" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='tellme/tellme.css') }}" rel="stylesheet" />
-</head>
-
-<body class="">
-    <div class="wrapper ">
-        <div class="sidebar" data-color="blue">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
-    -->
-            <div class="logo">
-                <a class="simple-text logo-mini">
-                    TM
-                </a>
-                <a class="simple-text logo-normal">
-                    TellMe
-                </a>
-            </div>
-            <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li>
-                        <a href="/dashboard">
-                            <i class="now-ui-icons design_app"></i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="/visualize">
-                            <i class="now-ui-icons business_chart-pie-36"></i>
-                            <p>Visualize</p>
-                        </a>
-                    </li>
-                    <li id="geomaps">
-                        <a href="javascript:showDiv('geomaps')">
-                            <i class="now-ui-icons location_map-big"></i>
-                            <p>Geo Maps</p>
-                        </a>
-                    </li>
-                    <li id="export">
-                        <a href="javascript:showDiv('export')">
-                            <i class="now-ui-icons files_paper"></i>
-                            <p>Export Data</p>
-                        </a>
-                    </li>
-                    <li id="user">
-                        <a href="javascript:showDiv('user')">
-                            <i class="now-ui-icons users_single-02"></i>
-                            <p>User Control</p>
-                        </a>
-                    </li>
-                    <li id="message">
-                        <a href="javascript:showDiv('message')">
-                            <i class="now-ui-icons ui-1_email-85"></i>
-                            <p>Message Broadcast</p>
-                        </a>
-                    </li>
-                    <li class="active-pro" id="settings">
-                        <a href="javascript:showDiv('settings')">
-                            <i class="now-ui-icons loader_gear"></i>
-                            <p>Settings</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="main-panel">
-            <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-transparent  navbar-absolute bg-primary fixed-top">
-                <div class="container-fluid">
-                    <div class="navbar-wrapper">
-                        <div class="navbar-toggle">
-                            <button type="button" class="navbar-toggler">
-                                <span class="navbar-toggler-bar bar1"></span>
-                                <span class="navbar-toggler-bar bar2"></span>
-                                <span class="navbar-toggler-bar bar3"></span>
-                            </button>
-                        </div>
-                        <a class="navbar-brand" href="#pablo">Visualize Data</a>
-                    </div>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                        <span class="navbar-toggler-bar navbar-kebab"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                        
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#pablo">
-                                    <p>
-                                        <span>Welcome :  Demo User</span>
-                                    </p>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <i class="now-ui-icons users_single-02"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#pablo">
-                                    
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-            <div class="panel-header panel-header-lg">
-            	<div class="header text-center">
-                    <h2 class="title">Visualizations</h2>
-                    <p class="category">Visualiza Data in Various Ways
-                        <a target="_blank" href="https://github.com/mouse0270">Robert McIntosh</a>. Please checkout the
-                        <a href="http://bootstrap-notify.remabledesigns.com/" target="_blank">full documentation.</a>
-                    </p>
-                </div>
-            </div>
-            <div class="content">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Distribution Representation</h4>
-                            </div>
-                            <div class="card-body">
-                                
-                            </div>
-                        </div>
-                    </div>
-				    <div class="col-lg-4 col-md-6">
-				        <div class="card card-chart">
-				            <div class="card-header">
-				                <h5 class="card-category">Doughnut</h5>
-				                <h4 class="card-title">One</h4>
-				            </div>
-				            <div class="card-body">
-				                <div class="chart-area">
-				                    <canvas id="chartjs-1" width="undefined" height="undefined"></canvas>
-				                </div>
-				            </div>
-				            <div class="card-footer">
-				                <div class="stats">
-				                    <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				    <div class="col-lg-4 col-md-6">
-				        <div class="card card-chart">
-				            <div class="card-header">
-				                <h5 class="card-category">Pie Chart</h5>
-				                <h4 class="card-title">Two</h4>
-				            </div>
-				            <div class="card-body">
-				                <div class="chart-area">
-				                    <canvas id="chartjs-2" width="undefined" height="undefined"></canvas>
-				                </div>
-				            </div>
-				            <div class="card-footer">
-				                <div class="stats">
-				                    <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-				    <div class="col-lg-4 col-md-6">
-				        <div class="card card-chart">
-				            <div class="card-header">
-				                <h5 class="card-category">Bar</h5>
-				                <h4 class="card-title">Three</h4>
-				            </div>
-				            <div class="card-body">
-				                <div class="chart-area">
-				                    <canvas id="chartjs-3" width="undefined" height="undefined"></canvas>
-				                </div>
-				            </div>
-				            <div class="card-footer">
-				                <div class="stats">
-				                    <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Comparative Representation</h4>
-                            </div>
-                            <div class="card-body">
-                                
-                            </div>
-                        </div>
-                    </div>
-				    <div class="col-lg-4 col-md-6">
-				        <div class="card card-chart">
-				            <div class="card-header">
-				                <h5 class="card-category">Line</h5>
-				                <h4 class="card-title">Four</h4>
-				            </div>
-				            <div class="card-body">
-				                <div class="chart-area">
-				                    <canvas id="chartjs-4" width="undefined" height="undefined"></canvas>
-				                </div>
-				            </div>
-				            <div class="card-footer">
-				                <div class="stats">
-				                    <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-				                </div>
-				            </div>
-				        </div>
-				    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="card card-chart">
-                            <div class="card-header">
-                                <h5 class="card-category">Scatter Plot</h5>
-                                <h4 class="card-title">Five</h4>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-area">
-                                    <canvas id="chartjs-5" width="undefined" height="undefined"></canvas>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="stats">
-                                    <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Timeline Representation</h4>
-                            </div>
-                            <div class="card-body">
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Multivariable Plots</h4>
-                            </div>
-                            <div class="card-body">
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <footer class="footer">
-                <div class="container-fluid">
-                    <nav>
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Link 1
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Link 2
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Link 3
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <div class="copyright">
-                        &copy;
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script>, Developed by
-                        <a href="http://www.nirnejak.com" target="_blank">Code-Cuisers</a>.
-                    </div>
-                </div>
-            </footer>
+{% block body %}
+    <div class="panel-header">
+        <div class="header text-center">
+            <h2 class="title">Visualize</h2>
+            <p class="category">Visualize your data in an interactive way.</p>
         </div>
     </div>
-</body>
-<!--   Core JS Files   -->
-<script src="{{ url_for('static', filename='js/core/jquery.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/core/popper.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/core/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/plugins/perfect-scrollbar.jquery.min.js') }}"></script>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Distribution Representation</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="card-category">Doughnut</h5>
+                        <h4 class="card-title">One</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="chartjs-1" width="undefined" height="undefined"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="card-category">Pie Chart</h5>
+                        <h4 class="card-title">Two</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="chartjs-2" width="undefined" height="undefined"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="card-category">Bar</h5>
+                        <h4 class="card-title">Three</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="chartjs-3" width="undefined" height="undefined"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Comparative Representation</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="card-category">Line</h5>
+                        <h4 class="card-title">Four</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="chartjs-4" width="undefined" height="undefined"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-chart">
+                    <div class="card-header">
+                        <h5 class="card-category">Scatter Plot</h5>
+                        <h4 class="card-title">Five</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="chartjs-5" width="undefined" height="undefined"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Timeline Representation</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Multivariable Plots</h4>
+                    </div>
+                    <div class="card-body">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<script src="{{ url_for('static', filename='js/plugins/chartjs.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/plugins/bootstrap-notify.js') }}"></script>
-<script src="{{ url_for('static', filename='js/now-ui-dashboard.js') }}"></script>
-
-<script src="{{ url_for('static', filename='tellme/tellme.js') }}"></script>
-<script src="{{ url_for('static', filename='tellme/charts.js') }}"></script>
-
-<script>
-	function showDiv(dir){
-	    $.get("/"+dir)
-	        .done(function(data){
-	            // Changing Content
-	            $(".content").html(data);
-	            
-	            // Activating the right SideBar Button
-	            $("li").removeClass('active');
-	            $("#"+dir).addClass('active');
-	            
-	            // Setting the Heading of the Section
-	            $(".navbar-brand").html(dir);
-
-	            // changing the size of the Header and Removing the Chart
-	            if($("#bigDashboardChart").length){
-	                $(".panel-header").html('');
-	                $(".panel-header").removeClass('panel-header-lg');
-	                $(".panel-header").addClass('panel-header-sm');
-	            }
-	        })
-	        .fail(function( jqXHR, textStatus, errorThrown ) {
-	            showNotification('top','center','danger','no internet connection')
-	        });;
-	}
-</script>
-
-
-</html>
+{% endblock %}

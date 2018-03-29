@@ -1,12 +1,80 @@
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">User Control</h4>
-            </div>
-            <div class="card-body">
-                
-            </div>
+{% extends 'layout.html' %}
+
+
+{% block body %}
+	<div class="panel-header">
+        <div class="header text-center">
+            <h2 class="title">User Control</h2>
+            <p class="category">Manage and Control users</p>
         </div>
     </div>
-</div>
+    <div class="content">
+		<div class="row">
+		    <div class="col-md-12">
+		        <div class="card">
+		            <div class="card-header">
+		                <h4 class="card-title">Add User</h4>
+		            </div>
+		            <div class="card-body" style="padding: 50px;">
+		                <div class="row">
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label>Aadhar ID</label>
+                                    <input type="text" name="aadharID" class="form-control" id="aadharID" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" name="password" class="form-control" id="password" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                    <label>User Type</label>
+                                    <select name="userType" class="form-control" id="userType" required>
+                                        <option value="ANALYST">Analysit</option>
+                                        <option value="ADMIN">Admin</option>
+                                        <option value="SUPER">Super User</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group">
+                                	<label>&nbsp;</label>
+                                    <button type="submit" class="form-control bg-info text-white" onclick="addUser()"><strong>Add User</strong></button>
+                                </div>
+                            </div>
+                        </div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+
+	<script>
+		function addUser(){
+			$.ajax({
+				url: '{{ url_for('register') }}',
+				type: 'POST',
+				dataType: 'json',
+				data: {
+					aadharID: $("#aadharID"),
+					password: $("#password"),
+					userType: $("#userType"),
+				},
+			})
+			.done(function() {
+				console.log("success");
+			})
+			.fail(function() {
+				console.log("error");
+			})
+			.always(function() {
+				console.log("complete");
+			});
+		}
+	</script>
+{% endblock %}	
