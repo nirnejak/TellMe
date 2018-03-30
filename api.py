@@ -458,7 +458,7 @@ def feedIrrigationData():
         
         # Executing Query
         try:
-            cur.execute("INSERT into irrigation(crop_id,water_ammount,water_source) values(%s,%s,%s)",(cropID,waterAmount,waterSource))
+            cur.execute("INSERT into irrigation(crop_id,water_amount,water_source) values(%s,%s,%s)",(cropID,waterAmount,waterSource))
         except:
             conn.rollback()
             res = {
