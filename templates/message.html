@@ -16,6 +16,7 @@
 		                <h4 class="card-title">Message Broadcast</h4>
 		            </div>
 		            <div class="card-body" style="padding: 50px;">
+                    <form action="" method="POST">
 		                <div class="row">
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
@@ -31,7 +32,12 @@
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>District</label>
-                                    <input type="text" placeholder="Enter District" name="district" class="form-control" id="district" required>
+                                    <select name="district" class="form-control" id="district" required>
+                                        <option value="">All</option>
+                                        {% for district in data.districtData %}
+                                            <option value="{{ district }}">{{ district }}</option>
+                                        {% endfor%}
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -39,10 +45,10 @@
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>Crop</label>
-                                    <select name="state" class="form-control" id="state" required>
+                                    <select name="crop" class="form-control" id="crop" required>
                                         <option value="">All</option>
-                                        {% for state in data.stateData %}
-                                            <option value="{{ state }}">{{ state }}</option>
+                                        {% for crop in data.cropData %}
+                                            <option value="{{ crop }}">{{ crop }}</option>
                                         {% endfor%}
                                     </select>
                                 </div>
@@ -50,10 +56,10 @@
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>Irrigation Source</label>
-                                    <select name="state" class="form-control" id="state" required>
+                                    <select name="source" class="form-control" id="source" required>
                                         <option value="">All</option>
-                                        {% for state in data.stateData %}
-                                            <option value="{{ state }}">{{ state }}</option>
+                                        {% for source in data.sourceData %}
+                                            <option value="{{ source }}">{{ source }}</option>
                                         {% endfor%}
                                     </select>
                                 </div>
@@ -87,7 +93,15 @@
                                 </div>
                             </div>
                         </div>
-		            </div>
+                        <div class="row">
+                            <div class="col-md-4 pr-1">
+                                <div class="form-group">
+                                    <button type="submit" class="form-control bg-success text-white"><strong>Send Message</strong></button>
+                                </div>
+                            </div>
+                        </div>
+		            </form>
+                    </div>
 		        </div>
 		    </div>
 		</div>
