@@ -43,6 +43,6 @@ def optimizeDB():
 def fetchDB():
 	try:
 		prepareDB()
-		redirect(url_for(dashboard))
+		jsonify({"status":"success"})
 	except:
-		redirect(url_for(dashboard))
+		jsonify({"status":"failed"})

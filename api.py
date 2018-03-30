@@ -1,11 +1,13 @@
 # Librarys
 from flask import request
 from flask import jsonify
-
+from datetime import timedelta 
+import logging
 import psycopg2 as pg2
 import psycopg2.extras as pgext
 # Importing the Application Modules
 from app import app
+
 
 # Importing Personal Libraries  
 
@@ -224,47 +226,58 @@ def checkNotification():
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("select irrigation_date from irrigation where aadhar_id = %s order by irrigation_date DESC limit 1;",[aadharID])
+            cur.execute("SELECT irrigation_date FROM irrigation WHERE aadhar_id = %s ORDER BY irrigation_date DESC LIMIT 1;",[aadharID])
         except:
             conn.rollback()
-            res["status"]="failed"
-            res['message']="Something went wrong"
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong"
+            }
             return jsonify(res)
 
+        conn.commit()
         # Generate Response
-        data = cur.fetchone()
+        data = cur.fetchone()[0]
+
         try:
-            if data + dt.timedelta(7) < dt.date.today() :
-                cur.execute('select reward_point from rewards;')
-                reward = cur.fetchone()
-                cur.exectue('update rewards set reward_point = %s',reward+1)
+            if data + dt.timedelta(7) < dt.date.today():
+                cur.execute('SELECT reward_point FROM rewards WHERE aadhar_id = %s;',[aadharID])
+                reward = cur.fetchone()[0]
+                conn.commit()
+
+                cur.execute('UPDATE rewards SET reward_point = %s;',[reward+1])
+                conn.commit()
+
+                cur.execute('UPDATE rewards SET last_reward_date = %s;',[dt.date.today()])
+                conn.commit()
+
+                res = {
+                    "reward" :reward+1
+                }
+                return jsonify(res)
+
+            # app.logger.info("mayab")
+                
         except:
             conn.rollback()
-            res["status"]="failed"
-            res['message']="Something went wrong"
+            res = {
+                "status" : "failed",
+                "message" : "Something went very wrong"
+            }
             return jsonify(res)
-
+        
         # Closing the cursor
         cur.close()
 
-        if data:
-        	res = {
-        		"status" : "success",
-        		"type" : data["type"],	# success, warning or danger
-        		"body" : data["body"],
-        		"link" : data["link"]
-        	}
-        else:
-        	res = {
-        		"status" : "failed",
-        		"message" : "No New Notification"
-        	}
     else:
         res = {
             "status" : "failed",
             "message" : "Invalid Request Method"
         }
     return jsonify(res)
+
+
+
 
 # Feed Farm Data
 @app.route('/api/feedFarmData', methods=['GET', 'POST'])
