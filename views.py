@@ -11,6 +11,7 @@ import psycopg2 as pg2
 from app import app
 from libs.data import stateData
 from libs.eltscript import prepareDB
+from libs.chloropleth import chloropleth
 
 # Views
 
@@ -73,6 +74,7 @@ def dashboard():
 def visualize():
 	if request.method == 'POST':
 		pass
+	
 	return render_template('visualize.html')
 
 # Geomaps Section
@@ -80,7 +82,11 @@ def visualize():
 def geomaps():
 	if request.method == 'POST':
 		pass
-	return render_template('geomaps.html')
+	else:
+		date_from = 2001
+		date_to = 2018
+		data = chloropleth(date_from, date_to)
+	return render_template('geomaps.html', data = data)
 
 # Export Data Section
 @app.route('/export', methods=['GET', 'POST']) 
