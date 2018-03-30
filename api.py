@@ -238,7 +238,7 @@ def checkNotification():
                 cur.execute('select reward_point from rewards;')
                 reward = cur.fetchone()
                 cur.exectue('update rewards set reward_point = %s',reward+1)
-            except:
+        except:
             conn.rollback()
             res["status"]="failed"
             res['message']="Something went wrong"
@@ -471,7 +471,7 @@ def feedIrrigationData():
         # Executing Query
         try:
             cur.execute("INSERT into irrigation(crop_id,water_amount,water_source,aadhar_id) values(%s,%s,%s,%s)",(cropID,waterAmount,waterSource,aadharID))
-        except:n
+        except:
             conn.rollback()
             res = {
                 "status" : "failed",
