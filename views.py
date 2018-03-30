@@ -66,13 +66,13 @@ def export():
 			districtData = cur.fetchall()
 
 			# Executing Query
-			cur.execute("SELECT DISTINCT crop_name FROM crop_dim ORDER BY crop;")
+			cur.execute("SELECT DISTINCT crop_name FROM crop_dim ORDER BY crop_name;")
 
 			# Fetching Data
 			cropData = cur.fetchall()
 
 			# Executing Query
-			cur.execute("SELECT DISTINCT water_source FROM fact_table ORDER BY source;")
+			cur.execute("SELECT DISTINCT water_source FROM fact_table ORDER BY water_source;")
 
 			# Fetching Data
 			sourceData = cur.fetchall()

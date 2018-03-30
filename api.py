@@ -416,7 +416,7 @@ def getCropList():
 
         # Generate Response
         data = cur.fetchall()
-        
+
         if data:
             res = {
                 "status" : "success",

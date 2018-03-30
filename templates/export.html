@@ -60,8 +60,8 @@
                                     <label>Crop</label>
                                     <select name="crop" class="form-control" id="crop" required>
                                         <option value="">All</option>
-                                        {% for state in data.stateData %}
-                                            <option value="{{ state }}">{{ state }}</option>
+                                        {% for crop in data.cropData %}
+                                            <option value="{{ crop }}">{{ crop }}</option>
                                         {% endfor%}
                                     </select>
                                 </div>
@@ -71,8 +71,8 @@
                                     <label>Source of Irrigation</label>
                                     <select name="source" class="form-control" id="source" required>
                                         <option value="">All</option>
-                                        {% for state in data.stateData %}
-                                            <option value="{{ state }}">{{ state }}</option>
+                                        {% for source in data.sourceData %}
+                                            <option value="{{ source }}">{{ source }}</option>
                                         {% endfor%}
                                     </select>
                                 </div>
