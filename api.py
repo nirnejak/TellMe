@@ -355,19 +355,18 @@ def getFarmList():
 def feedCropData():
     if request.method == 'POST':
         data = request.get_json()
-        res = data
+
         cropName = data['cropName']
         aadharID = data['aadharID']
         farmID = data['farmID']
         seedID = data['seedID']
         cropSeededAreaSize = data['cropSeededAreaSize']
 
-
          # Creating cursor
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("INSERT INTO crop(crop_name,belongs_to,farm_id,seed_id,crop_seeded_area_size) values(%s,%s,%s,%s,%s)",[cropName,aadharID,farmID,seedID,cropSeededAreaSize])
+            cur.execute("INSERT INTO crop(crop_name,belongs_to,farm_id,seed_id,crop_seeded_area_size) values(%s,%s,%s,%s,%s)",(cropName,aadharID,farmID,seedID,cropSeededAreaSize))
         except:
             conn.rollback()
             res = {
@@ -376,15 +375,16 @@ def feedCropData():
             }
             return jsonify(res)
 
-        # Generate Response
-        data = cur.fetchone()
-
         # Commiting the Changes
         conn.commit()
 
         # Closing the cursor
         cur.close()
 
+        # Generating Response
+        res = {
+            "status" : "successs"
+        }
         
     else:
         res = {
