@@ -303,7 +303,7 @@ tellme = {
           data: {
               labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
               datasets: [{
-                  label: "Active Users",
+                  label: "Water Consumption",
                   borderColor: "#f96332",
                   pointBorderColor: "#FFF",
                   pointBackgroundColor: "#f96332",

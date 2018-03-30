@@ -17,7 +17,7 @@ $(document).ready(function() {
             },
             options: {
                  legend: {
-                    display: false,
+                    display: true,
                     position : "bottom"
                  },
                  tooltips: {
@@ -47,7 +47,7 @@ $(document).ready(function() {
             },
             options: {
                  legend: {
-                    display: false,
+                    display: true,
                     position : "bottom"
                  },
                  tooltips: {
