@@ -12,13 +12,14 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
+    <link href="{{ url_for('static', filename='css/animate.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='css/now-ui-dashboard.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='tellme/tellme.css') }}" rel="stylesheet" />
 </head>
 
 <body class="">
-    <div class="wrapper ">
+    <div class="wrapper">
         {% include 'includes/_sidebar.html' %}
         <div class="main-panel">
         		{% include 'includes/_navbar.html' %}
