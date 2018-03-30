@@ -450,7 +450,7 @@ def feedIrrigationData():
         data = request.get_json()
 
         cropID = data['cropID']
-        waterAmmount = data['waterAmmount']
+        waterAmount = data['waterAmount']
         waterSource = data['waterSource']
 
          # Creating cursor
