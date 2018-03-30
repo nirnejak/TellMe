@@ -29,7 +29,7 @@ $(document).ready(function() {
     new Chart(document.getElementById("dashboardChart-2"),{
             "type":"pie",
             "data":{
-                "labels":["Canal","Pump","River","Other 1","Other 2","Other 3","Other 4"],
+                "labels":["Canal","Pump","River","Other"],
                 "datasets":[{
                     "label":"",
                     "data":[300,100,50,50],
@@ -37,10 +37,7 @@ $(document).ready(function() {
                         "rgb(255, 99, 132)",
                         "rgb(54, 162, 235)",
                         "rgb(255, 205, 86)",
-                        "rgb(10, 199, 0)",
-                        "rgb(75, 192, 192)",
-                        "rgb(153, 102, 255)",
-                        "rgb(255, 159, 64)"
+                        "rgb(10, 199, 0)"
 
                     ],
                 }]
