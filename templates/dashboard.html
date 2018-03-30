@@ -10,11 +10,11 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">User Stats</h5>
-                        <h4 class="card-title">Active Users</h4>
+                        <h4 class="card-title">{% for total in data.usersActive %} {{ total[0] }} {% endfor %}</h4>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="now-ui-icons arrows-1_refresh-69"></i> Just Now
+                            <i class="now-ui-icons arrows-1_refresh-69"></i> Active Users
                         </div>
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                 <div class="card card-chart">
                     <div class="card-header">
                         <h5 class="card-category">Farms</h5>
-                        <h4 class="card-title">Total Farms</h4>
+                        <h4 class="card-title">{% for total in data.totalFarms %} {{ total[0] }} {% endfor %}</h4>
                     </div>
                     <div class="card-footer">
                         <div class="stats">

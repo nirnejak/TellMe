@@ -450,7 +450,7 @@ def feedIrrigationData():
         data = request.get_json()
 
         cropID = data['cropID']
-        waterAmmount = data['waterAmmount']
+        waterAmount = data['waterAmount']
         waterSource = data['waterSource']
 
          # Creating cursor
@@ -458,8 +458,8 @@ def feedIrrigationData():
         
         # Executing Query
         try:
-            cur.execute("INSERT into irrigation(crop_id,water_ammount,water_source) values(%s,%s,%s)",(cropID,waterAmount,waterSource))
-        except:
+            cur.execute("INSERT into irrigation(crop_id,water_amount,water_source) values(%s,%s,%s)",(cropID,waterAmount,waterSource))
+        except:n
             conn.rollback()
             res = {
                 "status" : "failed",

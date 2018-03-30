@@ -23,9 +23,49 @@ def index():
 # Dashboard
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-	if request.method == 'POST':
-		pass
-	return render_template('dashboard.html')
+	conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca5e14e8dcc20b2a4bcb4bee2227e5b44cc02f488fba40240d1764c4ac750ca",host="ec2-23-21-217-27.compute-1.amazonaws.com",port="5432")
+
+	try:
+		# Creating cursor
+		cur = conn.cursor()
+
+        # Executing Query
+		cur.execute("SELECT users_active from dashboard;")
+
+		# Fetching Data
+		usersActive = cur.fetchall()
+
+		# Executing Query
+		cur.execute("SELECT total_farms from dashboard;")
+
+		# Fetching Data
+		totalFarms = cur.fetchall()
+
+	except:
+		conn.rollback()
+		res = {
+            "status" : "failed",
+            "message" : "Something went wrong",
+            "error" : ""
+        }
+		return jsonify(res)
+
+    # Commiting the Changes
+	conn.commit()
+
+    # Closing the cursor
+	cur.close()
+
+	# Closing the connection
+	conn.close()
+	
+	data = {
+		"usersActive" : usersActive,
+		"totalFarms" : totalFarms
+	}
+	# return jsonify(data)
+
+	return render_template('dashboard.html', data = data)
 
 # Visualize Section
 @app.route('/visualize', methods=['GET', 'POST'])
