@@ -383,7 +383,7 @@ def feedCropData():
 
         # Generating Response
         res = {
-            "status" : "successs"
+            "status" : "success"
         }
         
     else:
