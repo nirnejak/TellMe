@@ -226,8 +226,10 @@ def checkNotification():
             cur.execute("SELECT message_broadcast FROM users WHERE aadhar_id = %s AND user_type = 'FARMER';",[aadharID])
         except:
             conn.rollback()
-            res["status"]="failed"
-            res['message']="Something went wrong"
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong"
+            }
             return jsonify(res)
 
         # Generate Response
