@@ -42,10 +42,15 @@ def geomaps():
 	return render_template('geomaps.html')
 
 # Export Data Section
-@app.route('/export', methods=['GET', 'POST'])
+@app.route('/export', methods=['GET', 'POST']) 
 def export():
 	if request.method == 'POST':
-		pass
+		data = request.get_json()
+
+		dateFrom = data["dateFrom"]
+		dateTo = data["dateTo"]
+		state = data["state"]
+		district = data["district"]
 	else:
 		try:
 			# Connecting to database
@@ -61,13 +66,13 @@ def export():
 			districtData = cur.fetchall()
 
 			# Executing Query
-			cur.execute("SELECT DISTINCT crop FROM location_dim ORDER BY crop;")
+			cur.execute("SELECT DISTINCT crop_name FROM crop_dim ORDER BY crop;")
 
 			# Fetching Data
 			cropData = cur.fetchall()
 
 			# Executing Query
-			cur.execute("SELECT DISTINCT source FROM location_dim ORDER BY source;")
+			cur.execute("SELECT DISTINCT water_source FROM fact_table ORDER BY source;")
 
 			# Fetching Data
 			sourceData = cur.fetchall()
@@ -78,15 +83,17 @@ def export():
                 "message" : "Something went wrong",
                 "error" : ""
             }
-			return jsonify(res)     
+			return jsonify(res)
 
         # Commiting the Changes
 		conn.commit()
 
         # Closing the cursor
 		cur.close()
-		
 
+		# Closing the connection
+		conn.close()
+		
 		data = {
 			"stateData" : stateData,
 			"districtData" : districtData,
