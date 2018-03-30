@@ -52,10 +52,10 @@ def export():
 		state = data["state"]
 		district = data["district"]
 	else:
-		try:
-			# Connecting to database
-			conn = pg2.connect(database="db70oouohkh4bj",user="fnqryfoivwpuxd",password="884e1a40af2227d023c58401914873dfea4d44530a34647bb5930872b1a21807",host="ec2-54-221-220-59.compute-1.amazonaws.com",port="5432")
+		# Connecting to database
+		conn = pg2.connect(database="db70oouohkh4bj",user="fnqryfoivwpuxd",password="884e1a40af2227d023c58401914873dfea4d44530a34647bb5930872b1a21807",host="ec2-54-221-220-59.compute-1.amazonaws.com",port="5432")
 
+		try:
 			# Creating cursor
 			cur = conn.cursor()
 
