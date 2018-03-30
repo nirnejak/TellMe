@@ -39,7 +39,7 @@ def optimizeDB():
 	return jsonify(res)
 
 # FetchDB - Returns raw Data in JSON Format based on arguments passed through request.
-@app.route('/fetchDB', methods = ['GET','POST'])
+@app.route('/prepareDB', methods = ['GET','POST'])
 def fetchDB():
 	if request.method == 'POST':
 		data = request.get_json()
