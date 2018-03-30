@@ -41,15 +41,8 @@ def optimizeDB():
 # FetchDB - Returns raw Data in JSON Format based on arguments passed through request.
 @app.route('/prepareDB', methods = ['GET','POST'])
 def fetchDB():
-	if request.method == 'POST':
-		data = request.get_json()
-		res = {
-			"status":"success"
-		}
-	else:
-		res = {
-            "status" : "failed",
-            "message" : "Invalid Request Method"
-        }
-
-	return jsonify(res)
+	try:
+		prepareDB()
+		redirect(url_for(dashboard))
+	except:
+		redirect(url_for(dashboard))

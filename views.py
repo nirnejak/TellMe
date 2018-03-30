@@ -10,6 +10,7 @@ import psycopg2 as pg2
 # Importing the Application Modules
 from app import app
 from libs.data import stateData
+from libs.eltscript import prepareDB
 
 # Views
 

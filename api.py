@@ -214,6 +214,7 @@ def login():
 # CheckNotification - Check If user has any new notification
 @app.route('/api/checkNotification', methods=['GET', 'POST'])
 def checkNotification():
+    import datetime as dt
     if request.method == 'POST':
         data = request.get_json()
 
@@ -223,17 +224,25 @@ def checkNotification():
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("SELECT message_broadcast FROM users WHERE aadhar_id = %s AND user_type = 'FARMER';",[aadharID])
+            cur.execute("select irrigation_date from irrigation where aadhar_id = %s order by irrigation_date DESC limit 1;",[aadharID])
         except:
             conn.rollback()
-            res = {
-                "status" : "failed",
-                "message" : "Something went wrong"
-            }
+            res["status"]="failed"
+            res['message']="Something went wrong"
             return jsonify(res)
 
         # Generate Response
         data = cur.fetchone()
+        try:
+            if data + dt.timedelta(7) < dt.date.today() :
+                cur.execute('select reward_point from rewards;')
+                reward = cur.fetchone()
+                cur.exectue('update rewards set reward_point = %s',reward+1)
+            except:
+            conn.rollback()
+            res["status"]="failed"
+            res['message']="Something went wrong"
+            return jsonify(res)
 
         # Closing the cursor
         cur.close()
@@ -454,15 +463,15 @@ def feedIrrigationData():
         cropID = data['cropID']
         waterAmount = data['waterAmount']
         waterSource = data['waterSource']
+        aadharID = data['aadharID']
 
          # Creating cursor
         cur = conn.cursor()
         
         # Executing Query
         try:
-            cur.execute("INSERT into irrigation(crop_id,water_amount,water_source) values(%s,%s,%s)",(cropID,waterAmount,waterSource))
-
-        except:
+            cur.execute("INSERT into irrigation(crop_id,water_amount,water_source,aadhar_id) values(%s,%s,%s,%s)",(cropID,waterAmount,waterSource,aadharID))
+        except:n
             conn.rollback()
             res = {
                 "status" : "failed",
@@ -486,3 +495,6 @@ def feedIrrigationData():
             "message" : "Invalid Request Method"
         }
     return jsonify(res)
+
+
+
