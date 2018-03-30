@@ -83,9 +83,7 @@ def geomaps():
 	if request.method == 'POST':
 		pass
 	else:
-		date_from = 2001
-		date_to = 2018
-		data = chloropleth(date_from, date_to)
+		data = chloropleth()
 	return render_template('geomaps.html', data = data)
 
 # Export Data Section
