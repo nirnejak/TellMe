@@ -159,28 +159,13 @@ def geomaps():
 @app.route('/export', methods=['GET', 'POST'])
 @is_logged_in
 def export():
-	if request.method == 'POST':
-		data = request.get_json()
-
-		dateFrom = data["dateFrom"]
-		dateTo = data["dateTo"]
-		state = data["state"]
-		district = data["district"]
-		crop = data["crop"]
-		sourceIrrigation = data["sourceIrrigation"]
-
-		# Preparing List
-		if state != None:
-			state = [state]
-		
-		if district != None:
-			district = [district]
-		
-		if crop != None:
-			crop = [crop]
-	
-		if sourceIrrigation != None:
-			sourceIrrigation = [sourceIrrigation]		
+	if request.method == "POST":
+		dateFrom = request.form["dateFrom"]
+		dateTo = request.form["dateTo"]
+		state = request.form["state"]
+		district = request.form["district"]
+		crop = request.form["crop"]
+		sourceIrrigation = request.form["sourceIrrigation"]
 
 		data = export_data(dateFrom,dateTo,state,district,crop,sourceIrrigation)
 
@@ -242,9 +227,9 @@ def export():
 @is_logged_in
 def user():
 	if request.method == 'POST':
-		aadharID = form.data["aadharID"]
-		password = form.data["password"]
-		userType = form.data["userType"]
+		aadharID = request.form["aadharID"]
+		password = request.form["password"]
+		userType = request.form["userType"]
 
 
 		# Creating Connection
@@ -273,13 +258,13 @@ def user():
 @is_logged_in
 def message():
 	if request.method == 'POST':
-		state = form.data["state"]
-		district = form.data["district"]
-		crop = form.data["crop"]
-		irrigationSource = form.data["irrigationSource"]
-		messageBody = form.data["messageBody"]
-		messageLink = form.data["messageLink"]
-		messageType = form.data["messageType"]
+		state = request.form["state"]
+		district = request.form["district"]
+		crop = request.form["crop"]
+		irrigationSource = request.form["irrigationSource"]
+		messageBody = request.form["messageBody"]
+		messageLink = request.form["messageLink"]
+		messageType = request.form["messageType"]
 	else:
 		# Connecting to database
 		conn = pg2.connect(database="db70oouohkh4bj",user="fnqryfoivwpuxd",password="884e1a40af2227d023c58401914873dfea4d44530a34647bb5930872b1a21807",host="ec2-54-221-220-59.compute-1.amazonaws.com",port="5432")
