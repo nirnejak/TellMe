@@ -92,7 +92,6 @@ def logout():
 # Dashboard
 @app.route('/dashboard', methods=['GET', 'POST'])
 @is_logged_in
-@as_analyst
 def dashboard():
 	conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca5e14e8dcc20b2a4bcb4bee2227e5b44cc02f488fba40240d1764c4ac750ca",host="ec2-23-21-217-27.compute-1.amazonaws.com",port="5432")
 
@@ -173,15 +172,24 @@ def export():
 		# Preparing List
 		if state != "":
 			state = [state]
+		else:
+			state = None
 		
 		if district != "":
 			district = [district]
+		else:
+			district = None
 		
 		if crop != "":
 			crop = [crop]
+		else:
+			crop = None
 	
 		if sourceIrrigation != "":
 			sourceIrrigation = [sourceIrrigation]
+		else:
+			sourceIrrigation = None
+		
 
 		data = export_data(dateFrom,dateTo,state,district,crop,sourceIrrigation)
 

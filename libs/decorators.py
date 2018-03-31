@@ -24,7 +24,7 @@ def is_logged_in(f):
 			return f(*args, **kwargs)
 		else:
 			flash('Unauthorized, Please Login','danger')
-			return redirect(url_for('login'))
+			return redirect(url_for('index'))
 	return wrap
 
 # Check if user is superuser
@@ -36,7 +36,7 @@ def as_superuser(f):
 		else:
 			session.clear()
 			flash('Not Enough Privilages!','danger')
-			return redirect(url_for('login'))
+			return redirect(url_for('index'))
 	return wrap
 
 
@@ -49,7 +49,7 @@ def as_admin(f):
 		else:
 			session.clear()
 			flash('Not Enough Privilages!','danger')
-			return redirect(url_for('login'))
+			return redirect(url_for('index'))
 	return wrap
 
 # Check if user is analyst
@@ -61,7 +61,7 @@ def as_analyst(f):
 		else:
 			session.clear()
 			flash('Not Enough Privilages!','danger')
-			return redirect(url_for('login'))
+			return redirect(url_for('index'))
 	return wrap
 
 # Check if user is farmer
@@ -73,5 +73,5 @@ def as_farmer(f):
 		else:
 			session.clear()
 			flash('These features are meant to be acessed by Farmer!','danger')
-			return redirect(url_for('login'))
+			return redirect(url_for('index'))
 	return wrap

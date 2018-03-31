@@ -21,13 +21,13 @@
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>Date From</label>
-                                    <input type="date" name="dateFrom" class="form-control" id="dateFrom" required>
+                                    <input type="date" name="dateFrom" class="form-control" id="dateFrom">
                                 </div>
                             </div>
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>Date To</label>
-                                    <input type="date" name="dateTo" class="form-control" id="dateTo" required>
+                                    <input type="date" name="dateTo" class="form-control" id="dateTo">
                                 </div>
                             </div>
                         </div>
@@ -35,8 +35,8 @@
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>State</label>
-                                    <select name="state" class="form-control" id="state" required>
-                                        <option value="">All</option>
+                                    <select name="state" class="form-control" id="state">
+                                        <option value="x">All</option>
                                         {% for state in data.stateData %}
                                             <option value="{{ state }}">{{ state }}</option>
                                         {% endfor%}
@@ -46,8 +46,8 @@
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>District</label>
-                                    <select name="district" class="form-control" id="district" required>
-                                        <option value="">All</option>
+                                    <select name="district" class="form-control" id="district">
+                                        <option value="x">All</option>
                                         {% for district in data.districtData %}
                                             <option value="{{ district }}">{{ district }}</option>
                                         {% endfor%}
@@ -59,8 +59,8 @@
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>Crop</label>
-                                    <select name="crop" class="form-control" id="crop" required>
-                                        <option value="">All</option>
+                                    <select name="crop" class="form-control" id="crop">
+                                        <option value="x">All</option>
                                         {% for crop in data.cropData %}
                                             <option value="{{ crop }}">{{ crop }}</option>
                                         {% endfor%}
@@ -70,8 +70,8 @@
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                     <label>Source of Irrigation</label>
-                                    <select name="source" class="form-control" id="source" required>
-                                        <option value="">All</option>
+                                    <select name="source" class="form-control" id="source">
+                                        <option value="x">All</option>
                                         {% for source in data.sourceData %}
                                             <option value="{{ source }}">{{ source }}</option>
                                         {% endfor%}
