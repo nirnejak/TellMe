@@ -160,6 +160,7 @@ def geomaps():
 @is_logged_in
 def export():
 	if request.method == "POST":
+		'''
 		dateFrom = request.form["dateFrom"]
 		dateTo = request.form["dateTo"]
 		state = request.form["state"]
@@ -168,8 +169,11 @@ def export():
 		sourceIrrigation = request.form["sourceIrrigation"]
 
 		data = export_data(dateFrom,dateTo,state,district,crop,sourceIrrigation)
-
-		return data
+		'''
+		data = {
+			"No data":"nodata"
+		}
+		return jsonify(data)
 
 	else:
 		# Connecting to database
