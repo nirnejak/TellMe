@@ -256,6 +256,14 @@ def checkNotification():
                     "reward" :reward+1
                 }
                 return jsonify(res)
+            else:
+                cur.execute('SELECT reward_point FROM rewards WHERE aadhar_id = %s;',[aadharID])
+                reward = cur.fetchone()[0]
+                conn.commit()
+                res = {
+                   "reward" :reward
+                }
+                return jsonify(res)    
 
             # app.logger.info("mayab")
                 
@@ -391,7 +399,7 @@ def feedCropData():
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("INSERT INTO crop(crop_name,belongs_to,farm_id,seed_id,crop_seeded_area_size) values(%s,%s,%s,%s,%s)",(cropName,aadharID,farmID,seedID,cropSeededAreaSize))
+            cur.execute("INSERT INTO crop(crop_name,belongs_to,farm_id,seed_id,crop_seeded_area_size) VALUES(%s,%s,%s,%s,%s)",(cropName,aadharID,farmID,seedID,cropSeededAreaSize))
         except:
             conn.rollback()
             res = {
@@ -484,7 +492,7 @@ def feedIrrigationData():
         
         # Executing Query
         try:
-            cur.execute("INSERT into irrigation(crop_id,water_amount,water_source,aadhar_id) values(%s,%s,%s,%s)",(cropID,waterAmount,waterSource,aadharID))
+            cur.execute("INSERT INTO irrigation(crop_id,water_amount,water_source,aadhar_id) VALUES(%s,%s,%s,%s)",(cropID,waterAmount,waterSource,aadharID))
         except:
             conn.rollback()
             res = {
@@ -495,7 +503,73 @@ def feedIrrigationData():
 
         # Commiting the Changes
         conn.commit()
+        try:
+             cur.execute("SELECT crop_seeded_area_size,crop_name FROM crop WHERE crop_id = %s;",[cropID]) 
+        except:
+            conn.rollback()
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong"
+            }
+            return jsonify(res)
 
+        temp = cur.fetchone()
+        farmer_seeded_area = temp[0]
+        cropName = temp[1]
+        # res = {
+        #     "data" : farmer_seeded_area,
+        #     "water": waterAmount
+        # }
+        # return jsonify(res)
+
+        # Commiting the Changes
+        conn.commit()
+        waterAmountPerDay = int(waterAmount) * farmer_seeded_area
+        res = {
+            "water": waterAmountPerDay
+        }
+        
+
+        try:
+            cur.execute("SELECT crop_name,water_amount_per_sq_m FROM required_water_amount WHERE crop_name= %s;",[cropName]) 
+            temp = cur.fetchall()
+            
+            cropName_required = temp[0][0]
+            waterAmount_required = temp[0][1] * farmer_seeded_area
+            res = {
+            "name" : temp,
+            "cropName": cropName,
+            "crop_name": cropName_required,
+            "water": waterAmount_required
+            }
+            
+        except:      
+            conn.rollback()
+            res = {
+                "status" : "failed",
+                "message" : "Something went not wrong"
+            }
+        
+        # Commiting the Changes
+        conn.commit()
+        try:
+            if (waterAmountPerDay - waterAmount_required) > 5 :
+                message = 'you are really overusing it'
+                res = {
+                    "data": message,
+                    "aadharID" : aadharID
+                }
+                # return jsonify(res)
+                cur.execute("UPDATE users SET message_broadcast = %s WHERE aadhar_id = %s;",(message,aadharID))
+
+        except:      
+            conn.rollback()
+
+            res = {
+                "status" : "failed",
+                "message" : "Something went very wrong"
+            }
+        conn.commit()    
         # Closing the cursor
         cur.close()
 
@@ -509,6 +583,3 @@ def feedIrrigationData():
             "message" : "Invalid Request Method"
         }
     return jsonify(res)
-
-
-
