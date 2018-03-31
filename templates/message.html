@@ -53,43 +53,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6 pr-1">
-                                <div class="form-group">
-                                    <label>Irrigation Source</label>
-                                    <select name="source" class="form-control" id="source" required>
-                                        <option value="">All</option>
-                                        {% for source in data.sourceData %}
-                                            <option value="{{ source }}">{{ source }}</option>
-                                        {% endfor%}
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Message</label>
                                     <textarea rows="4" cols="80" class="form-control" placeholder="Enter your message here"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 pr-1">
-                                <div class="form-group">
-                                    <label>Message Link</label>
-                                    <input type="text" class="form-control" placeholder="Enter Link for your message">
-                                </div>
-                            </div>
-                            <div class="col-md-6 pr-1">
-                                <div class="form-group">
-                                    <label>Message Type</label>
-                                    <select name="messageType" class="form-control" id="messageType" required>
-                                        <option value="">All</option>
-                                        <option value="success">Success</option>
-                                        <option value="info">Info</option>
-                                        <option value="warning">Warning</option>
-                                        <option value="danger">Danger</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
