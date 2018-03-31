@@ -260,11 +260,33 @@ def message():
 	if request.method == 'POST':
 		state = request.form["state"]
 		district = request.form["district"]
-		crop = request.form["crop"]
-		irrigationSource = request.form["irrigationSource"]
+		city = request.form["city"]
 		messageBody = request.form["messageBody"]
-		messageLink = request.form["messageLink"]
-		messageType = request.form["messageType"]
+
+		# Creating Connection
+		conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca5e14e8dcc20b2a4bcb4bee2227e5b44cc02f488fba40240d1764c4ac750ca",host="ec2-23-21-217-27.compute-1.amazonaws.com",port="5432")
+
+		try:
+			# Creating cursor
+			cur = conn.cursor()
+
+			# Executing Query
+			cur.execute("UPDATE users SET message_broadcast = %s WHERE state = %s AND district = %s AND city = %s",(messageBody, state, district, city))
+
+			# Commiting into Database
+			cur.commit()
+			conn.commit()
+
+			# Closing Cursor and Database
+			cur.close()
+			conn.close()
+		except:
+			pass
+	
+	return render_template('message.html')
+
+
+
 	else:
 		# Connecting to database
 		conn = pg2.connect(database="db70oouohkh4bj",user="fnqryfoivwpuxd",password="884e1a40af2227d023c58401914873dfea4d44530a34647bb5930872b1a21807",host="ec2-54-221-220-59.compute-1.amazonaws.com",port="5432")
