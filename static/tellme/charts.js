@@ -56,10 +56,10 @@ $(document).ready(function() {
     new Chart(document.getElementById("dashboardChart-3"),{
             type: 'bar',
             data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                labels: ["Rice", "Wheat", "Sugarcane", "Sunflower", "Corn", "Others"],
                 datasets: [{
                     label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: [12, 19, 3, 7, 4, 9],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
