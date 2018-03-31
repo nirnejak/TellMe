@@ -12,6 +12,7 @@ from app import app
 from libs.data import stateData
 from libs.eltscript import prepareDB
 from libs.chloropleth import chloropleth
+from libs.export import export_data
 
 # Views
 
@@ -96,6 +97,24 @@ def export():
 		dateTo = data["dateTo"]
 		state = data["state"]
 		district = data["district"]
+		crop = data["crop"]
+		sourceIrrigation = data["sourceIrrigation"]
+
+		# Preparing List
+		if state != "":
+			state = [state]
+		
+		if district != "":
+			district = [district]
+		
+		if crop != "":
+			crop = [crop]
+	
+		if sourceIrrigation != "":
+			sourceIrrigation = [sourceIrrigation]
+
+		export_data(dateFrom,dateTo,state,district,crop,sourceIrrigation)
+
 	else:
 		# Connecting to database
 		conn = pg2.connect(database="db70oouohkh4bj",user="fnqryfoivwpuxd",password="884e1a40af2227d023c58401914873dfea4d44530a34647bb5930872b1a21807",host="ec2-54-221-220-59.compute-1.amazonaws.com",port="5432")

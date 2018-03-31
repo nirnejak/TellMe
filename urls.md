@@ -38,13 +38,22 @@ API:
 #/api/checkNotification
 	Input:
 		{
-			"aadharID":""
+			"aadharID":"",
 		}
 
 
 #/api/feedFarmData
 		{
-			"aadharID":""
+			"aadharID":"",
+			"farmName":"",
+			"longitude":"",
+			"latitude":"",
+			"state":"",
+			"district":"",
+			"city":"",
+			"landArea":"",
+			"groundWaterLevel":"",
+			"soilType":""
 		}
 
 

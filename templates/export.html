@@ -16,6 +16,7 @@
                         <h4 class="card-title">Export Data</h4>
                     </div>
                     <div class="card-body" style="padding: 50px;">
+                    <form action="" method="POST">
                         <div class="row">
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
@@ -80,22 +81,27 @@
                         </div>
                         <br>
                         <div class="row">
+                            <!--
                             <div class="col-md-4 pr-1">
                                 <div class="form-group">
                                     <button type="submit" class="form-control bg-danger text-white" onclick="exportData('xls')"><strong>Export (.xls)</strong></button>
                                 </div>
                             </div>
+                            -->
                             <div class="col-md-4 pr-1">
                                 <div class="form-group">
-                                    <button type="submit" class="form-control bg-warning text-white" onclick="exportData('csv')"><strong>Export (.csv)</strong></button>
+                                    <button type="submit" class="form-control bg-success text-white"><strong>Export (.csv)</strong></button>
                                 </div>
                             </div>
+                            <!--
                             <div class="col-md-4 pr-1">
                                 <div class="form-group">
                                     <button type="submit" class="form-control bg-success text-white" onclick="exportData('json')"><strong>Export (.json)</strong></button>
                                 </div>
                             </div>
+                            -->
                         </div>
+                    </form>
                     </div>
                 </div>
             </div>

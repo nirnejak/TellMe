@@ -16,6 +16,7 @@ conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca
 
 
 # Views
+
 # SyncDB - Copy Necessory Files from General Database and Copy them to Analysis Database
 @app.route('/syncDB', methods = ['GET','POST'])
 def syndDB():
@@ -43,6 +44,6 @@ def optimizeDB():
 def fetchDB():
 	try:
 		prepareDB()
-		jsonify({"status":"success"})
+		return jsonify({"status":"success"})
 	except:
-		jsonify({"status":"failed"})
+		return jsonify({"status":"failed"})
