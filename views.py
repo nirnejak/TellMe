@@ -283,7 +283,7 @@ def message():
 		except:
 			pass
 	
-	return render_template('message.html')
+		return render_template('message.html')
 
 
 
