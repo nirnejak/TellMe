@@ -6,6 +6,7 @@ from flask import redirect
 from flask import jsonify
 
 import psycopg2 as pg2
+import psycopg2.extras as pgext
 
 # Importing the Application Modules
 from app import app
@@ -13,18 +14,85 @@ from libs.data import stateData
 from libs.eltscript import prepareDB
 from libs.chloropleth import chloropleth
 from libs.export import export_data
+from libs.decorators import *
 
 # Views
 
 # Index
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET','POST'])
 def index():
 	if request.method == 'POST':
-		pass
-	return redirect(url_for('dashboard'))
+		# Get Form Fields
+		aadharID = request.form['aadharID']
+		password_candidate = request.form['password']
+
+		# Connecting to database
+		conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca5e14e8dcc20b2a4bcb4bee2227e5b44cc02f488fba40240d1764c4ac750ca",host="ec2-23-21-217-27.compute-1.amazonaws.com",port="5432")
+
+		# Creating cursor
+		cur = conn.cursor()
+
+
+		# Creating cursor
+		cur = conn.cursor(cursor_factory=pgext.DictCursor)
+        
+        # Executing Query
+		try:
+			cur.execute("SELECT password, name, user_type FROM users WHERE aadhar_id = %s;",[aadharID])
+		except:
+			conn.rollback()
+			res = {
+				"status":"failed",
+				"message" : "Something went wrong"
+			}
+			return jsonify(res)
+
+		# Generate Response
+		dataRecieved = cur.fetchone()
+
+		# Commiting the Changes
+		conn.commit()
+
+		# Closing the cursor
+		cur.close()
+
+		if dataRecieved:
+			# Compare Passwords
+			if password_candidate == dataRecieved['password']:
+				session['logged_in'] = True
+				session['aadharID'] = aadharID
+				session['userType'] = dataRecieved['user_type']
+
+				return redirect(url_for('dashboard'))
+			else:
+				res = {
+                    "type" : "danger",
+                    "message" : "Invalid Login"
+                }
+				return render_template('index.html', res = res)
+		else:
+			res = {
+				"type" : "danger",
+				"message" : "Aadhar not Registered"
+			}	
+			return render_template('index.html', res = res)
+	return render_template('index.html')
+
+# Logout
+@app.route('/logout')
+@is_logged_in
+def logout():
+	session.clear()
+	res = {
+		"type" : "success",
+		"message" : "Invalid Login"
+	}
+	return redirect(url_for('index'))
+
 
 # Dashboard
 @app.route('/dashboard', methods=['GET', 'POST'])
+@is_logged_in
 def dashboard():
 	conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca5e14e8dcc20b2a4bcb4bee2227e5b44cc02f488fba40240d1764c4ac750ca",host="ec2-23-21-217-27.compute-1.amazonaws.com",port="5432")
 
@@ -72,6 +140,7 @@ def dashboard():
 
 # Visualize Section
 @app.route('/visualize', methods=['GET', 'POST'])
+@is_logged_in
 def visualize():
 	if request.method == 'POST':
 		pass
@@ -80,6 +149,7 @@ def visualize():
 
 # Geomaps Section
 @app.route('/geomaps', methods=['GET', 'POST'])
+@is_logged_in
 def geomaps():
 	if request.method == 'POST':
 		pass
@@ -88,7 +158,8 @@ def geomaps():
 	return render_template('geomaps.html', data = data)
 
 # Export Data Section
-@app.route('/export', methods=['GET', 'POST']) 
+@app.route('/export', methods=['GET', 'POST'])
+@is_logged_in
 def export():
 	if request.method == 'POST':
 		data = request.get_json()
@@ -113,7 +184,9 @@ def export():
 		if sourceIrrigation != "":
 			sourceIrrigation = [sourceIrrigation]
 
-		export_data(dateFrom,dateTo,state,district,crop,sourceIrrigation)
+		data = export_data(dateFrom,dateTo,state,district,crop,sourceIrrigation)
+
+		return data
 
 	else:
 		# Connecting to database
@@ -168,11 +241,13 @@ def export():
 
 # User Management Section
 @app.route('/user', methods=['GET', 'POST'])
+@is_logged_in
 def user():
     return render_template('user.html')
 
 # Broadcast Message Section
 @app.route('/message', methods=['GET', 'POST'])
+@is_logged_in
 def message():
 	if request.method == 'POST':
 		state = form.data["state"]
@@ -235,6 +310,7 @@ def message():
 
 # User Settings Section
 @app.route('/settings', methods=['GET', 'POST'])
+@is_logged_in
 def settings():
 	if request.method == 'POST':
 		pass

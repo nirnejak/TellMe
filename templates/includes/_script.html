@@ -28,47 +28,4 @@
                 showNotification('top','center','danger','no internet connection')
             });;
     }
-    
-    new Chart(document.getElementById("chartjs-4"),{
-            "type":"doughnut",
-            "data":{
-                "labels":["Canal","Pump","River","Other"],
-                "datasets":[{
-                    "label":"",
-                    "data":[300,100,50,50],
-                    "backgroundColor":[
-                        "rgb(255, 99, 132)",
-                        "rgb(54, 162, 235)",
-                        "rgb(255, 205, 86)",
-                        "rgb(10, 199, 0)"
-                    ]
-                }]
-            },
-            options: {
-                 legend: {
-                    display: false,
-                    position : "bottom"
-                 },
-                 tooltips: {
-                    enabled: true
-                 }
-            }
-        }
-    );
-
-
-
-      $('#world-map-gdp').vectorMap({
-        map: 'world_mill',
-        series: {
-          regions: [{
-            values: gdpData,
-            scale: ['#C8EEFF', '#0071A4'],
-            normalizeFunction: 'polynomial'
-          }]
-        },
-        onRegionTipShow: function(e, el, code){
-          el.html(el.html()+' (GDP - '+gdpData[code]+')');
-        }
-      });
 </script>

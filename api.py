@@ -5,6 +5,7 @@ from datetime import timedelta
 import logging
 import psycopg2 as pg2
 import psycopg2.extras as pgext
+
 # Importing the Application Modules
 from app import app
 
