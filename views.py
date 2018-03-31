@@ -170,26 +170,17 @@ def export():
 		sourceIrrigation = data["sourceIrrigation"]
 
 		# Preparing List
-		if state != "":
+		if state != None:
 			state = [state]
-		else:
-			state = None
 		
-		if district != "":
+		if district != None:
 			district = [district]
-		else:
-			district = None
 		
-		if crop != "":
+		if crop != None:
 			crop = [crop]
-		else:
-			crop = None
 	
-		if sourceIrrigation != "":
-			sourceIrrigation = [sourceIrrigation]
-		else:
-			sourceIrrigation = None
-		
+		if sourceIrrigation != None:
+			sourceIrrigation = [sourceIrrigation]		
 
 		data = export_data(dateFrom,dateTo,state,district,crop,sourceIrrigation)
 
