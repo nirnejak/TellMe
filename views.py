@@ -32,7 +32,6 @@ def index():
 		# Creating cursor
 		cur = conn.cursor()
 
-
 		# Creating cursor
 		cur = conn.cursor(cursor_factory=pgext.DictCursor)
         
@@ -74,7 +73,7 @@ def index():
 			res = {
 				"type" : "danger",
 				"message" : "Aadhar not Registered"
-			}	
+			}
 			return render_template('index.html', res = res)
 	return render_template('index.html')
 
@@ -93,6 +92,7 @@ def logout():
 # Dashboard
 @app.route('/dashboard', methods=['GET', 'POST'])
 @is_logged_in
+@as_analyst
 def dashboard():
 	conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca5e14e8dcc20b2a4bcb4bee2227e5b44cc02f488fba40240d1764c4ac750ca",host="ec2-23-21-217-27.compute-1.amazonaws.com",port="5432")
 
@@ -144,7 +144,6 @@ def dashboard():
 def visualize():
 	if request.method == 'POST':
 		pass
-	
 	return render_template('visualize.html')
 
 # Geomaps Section
@@ -243,7 +242,32 @@ def export():
 @app.route('/user', methods=['GET', 'POST'])
 @is_logged_in
 def user():
-    return render_template('user.html')
+	if request.method == 'POST':
+		aadharID = form.data["aadharID"]
+		password = form.data["password"]
+		userType = form.data["userType"]
+
+
+		# Creating Connection
+		conn = pg2.connect(database="d1g2c8ihf7qeng",user="ucyteulerrxxoo",password="bca5e14e8dcc20b2a4bcb4bee2227e5b44cc02f488fba40240d1764c4ac750ca",host="ec2-23-21-217-27.compute-1.amazonaws.com",port="5432")
+
+		try:
+			# Creating cursor
+			cur = conn.cursor()
+
+			# Executing Query
+			cur.execute("INSERT INTO users(aadhar_id, password, name, contact_no, user_type) VALUES(%s,%s,%s,%s,%s)",(aadharID, password, aadharData[aadharID]['name'], aadharData[aadharID]['contact_no'],userType))
+
+			# Commiting into Database
+			cur.commit()
+			conn.commit()
+
+			# Closing Cursor and Database
+			cur.close()
+			conn.close()
+		except:
+			pass
+	return render_template('user.html')
 
 # Broadcast Message Section
 @app.route('/message', methods=['GET', 'POST'])

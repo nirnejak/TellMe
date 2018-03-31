@@ -286,6 +286,15 @@ def checkNotification():
     return jsonify(res)
 
 
+# temp route
+@app.route('/api/tempRoute',methods = ['GET','POST'])
+def tempRoute():
+    if request.method == 'POST':
+        res = {
+            "reward" : "200",
+            "notification" : "Hello there"
+        }
+        return jsonify(res)
 
 
 # Feed Farm Data

@@ -16,6 +16,7 @@
 		                <h4 class="card-title">Add User</h4>
 		            </div>
 		            <div class="card-body" style="padding: 50px;">
+		            	<form action="" method="POST">
 		                <div class="row">
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
@@ -35,6 +36,7 @@
                                 <div class="form-group">
                                     <label>User Type</label>
                                     <select name="userType" class="form-control" id="userType" required>
+                                        <option value="CENTER">Kisan Center</option>
                                         <option value="ANALYST">Analyst</option>
                                         <option value="ADMIN">Admin</option>
                                         <option value="SUPER">Super User</option>
@@ -44,10 +46,11 @@
                             <div class="col-md-6 pr-1">
                                 <div class="form-group">
                                 	<label>&nbsp;</label>
-                                    <button type="submit" class="form-control bg-info text-white" onclick="addUser()"><strong>Add User</strong></button>
+                                    <button type="submit" class="form-control bg-info text-white"><strong>Add User</strong></button>
                                 </div>
                             </div>
                         </div>
+                        </form>
 		            </div>
 		        </div>
 		    </div>
