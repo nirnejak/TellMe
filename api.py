@@ -286,15 +286,87 @@ def checkNotification():
     return jsonify(res)
 
 
-# temp route
-@app.route('/api/tempRoute',methods = ['GET','POST'])
-def tempRoute():
+@app.route('/api/tempRoute', methods=['GET', 'POST'])
+def checkMessage():
     if request.method == 'POST':
+        data = request.get_json()
+
+        aadharID = data['aadharID']
+        
+        # Creating cursor
+        cur = conn.cursor()
+        # Executing Query
+        try:
+            cur.execute("SELECT message_broadcast from users where aadhar_id = %s",[aadharID])
+            data = cur.fetchone()[0]
+            conn.commit()
+            if data != None :
+            	res = {
+            		"notification" : data
+            	} 
+            	return jsonify(res)
+            else:
+            	res = {
+            		"notification": ""
+            	}	
+        except:
+            conn.rollback()
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong"
+            }
+            return jsonify(res)
+
+        conn.commit()
+        # Generate Response
+                
+      	# Closing the cursor
+        cur.close()
+
+    else:
         res = {
-            "reward" : "200",
-            "notification" : "Hello there"
+            "status" : "failed",
+            "message" : "Invalid Request Method"
         }
-        return jsonify(res)
+    return jsonify(res)
+
+
+@app.route('/api/clearMessage', methods=['GET', 'POST'])
+def clearMessage():
+    if request.method == 'POST':
+        data = request.get_json()
+
+        aadharID = data['aadharID']
+        
+        # Creating cursor
+        cur = conn.cursor()
+        # Executing Query
+        try:
+            cur.execute("UPDATE users set message_broadcast = ''",[aadharID])
+        except:
+            conn.rollback()
+            res = {
+                "status" : "failed",
+                "message" : "Something went wrong"
+            }
+            return jsonify(res)
+
+        conn.commit()
+        # Generate Response
+                
+      	# Closing the cursor
+        cur.close()
+
+    else:
+        res = {
+            "status" : "failed",
+            "message" : "Invalid Request Method"
+        }
+    return jsonify(res)
+
+
+
+
 
 
 # Feed Farm Data
@@ -403,12 +475,13 @@ def feedCropData():
         farmID = data['farmID']
         seedID = data['seedID']
         cropSeededAreaSize = data['cropSeededAreaSize']
+        season = data['season']
 
          # Creating cursor
         cur = conn.cursor()
         # Executing Query
         try:
-            cur.execute("INSERT INTO crop(crop_name,belongs_to,farm_id,seed_id,crop_seeded_area_size) VALUES(%s,%s,%s,%s,%s)",(cropName,aadharID,farmID,seedID,cropSeededAreaSize))
+            cur.execute("INSERT INTO crop(crop_name,belongs_to,farm_id,seed_id,crop_seeded_area_size,season) values(%s,%s,%s,%s,%s,%s)",(cropName,aadharID,farmID,seedID,cropSeededAreaSize,season))
         except:
             conn.rollback()
             res = {
@@ -501,7 +574,7 @@ def feedIrrigationData():
         
         # Executing Query
         try:
-            cur.execute("INSERT INTO irrigation(crop_id,water_amount,water_source,aadhar_id) VALUES(%s,%s,%s,%s)",(cropID,waterAmount,waterSource,aadharID))
+            cur.execute("INSERT into irrigation(crop_id,water_amount,water_source,aadhar_id) values(%s,%s,%s,%s)",(cropID,waterAmount,waterSource,aadharID))
         except:
             conn.rollback()
             res = {
@@ -513,7 +586,7 @@ def feedIrrigationData():
         # Commiting the Changes
         conn.commit()
         try:
-             cur.execute("SELECT crop_seeded_area_size,crop_name FROM crop WHERE crop_id = %s;",[cropID]) 
+             cur.execute("SELECT crop_seeded_area_size,crop_name from crop where crop_id = %s;",[cropID]) 
         except:
             conn.rollback()
             res = {
@@ -540,7 +613,7 @@ def feedIrrigationData():
         
 
         try:
-            cur.execute("SELECT crop_name,water_amount_per_sq_m FROM required_water_amount WHERE crop_name= %s;",[cropName]) 
+            cur.execute("SELECT crop_name,water_amount_per_sq_m from required_water_amount where crop_name= %s;",[cropName]) 
             temp = cur.fetchall()
             
             cropName_required = temp[0][0]
@@ -563,13 +636,13 @@ def feedIrrigationData():
         conn.commit()
         try:
             if (waterAmountPerDay - waterAmount_required) > 5 :
-                message = 'you are really overusing it'
+                message = 'You are using excess amount of water for the crop, please control your water usage.'
                 res = {
                     "data": message,
                     "aadharID" : aadharID
                 }
                 # return jsonify(res)
-                cur.execute("UPDATE users SET message_broadcast = %s WHERE aadhar_id = %s;",(message,aadharID))
+                cur.execute("UPDATE users set message_broadcast = %s where aadhar_id = %s;",(message,aadharID))
 
         except:      
             conn.rollback()
