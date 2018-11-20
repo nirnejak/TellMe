@@ -11,7 +11,7 @@ Clone the Project
 
 ```sh
 $ git clone https://github.com/JitendraNirnejak/TellMe.git
-$ cd sass_boilerplate
+$ cd TellMe
 ```
 
 ### Installation
