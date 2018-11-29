@@ -1,0 +1,28 @@
+{
+  "name": "tellme",
+  "version": "1.0.0",
+  "description": "TellMe REST API Analysis",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JitendraNirnejak/TellMe.git"
+  },
+  "keywords": [
+    "TellMe",
+    "Collect",
+    "Analyse",
+    "Connect"
+  ],
+  "author": "Jitendra Nirnejak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JitendraNirnejak/TellMe/issues"
+  },
+  "homepage": "https://github.com/JitendraNirnejak/TellMe#readme",
+  "dependencies": {
+    "sass": "^1.15.1"
+  }
+}
