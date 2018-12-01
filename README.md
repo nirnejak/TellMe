@@ -24,8 +24,115 @@ $ pipenv install
 
 ### Run
 
-This is start the server
+This will start the server
 
 ```sh
 $ python app.py
+```
+
+## API Endpoints:
+
+### **/api/getOTP :**
+```sh
+	{
+		"aadharID": ""
+	}
+```
+
+
+### **/api/verifyOTP :**
+```sh
+	{
+		"aadharID":"",
+		"OTP":""
+	}
+```
+
+
+### **/api/register :**
+```sh
+	{
+		"aadharID":"",
+		"password":"",
+		"contactNo":"",
+		"name":""
+	}
+```
+
+
+### **/api/login :**
+```sh
+	{
+		"aadharID":"",
+		"password":""
+	}
+```
+
+
+### **/api/checkNotification :**
+```sh
+	{
+		"aadharID":"",
+	}
+```
+
+
+### **/api/feedFarmData :**
+```sh
+	{
+		"aadharID":"",
+		"farmName":"",
+		"longitude":"",
+		"latitude":"",
+		"state":"",
+		"district":"",
+		"city":"",
+		"landArea":"",
+		"groundWaterLevel":"",
+		"soilType":""
+	}
+```
+
+
+### **/api/getFarmList :**
+```sh
+	{
+		"aadharID":""
+	}
+```
+
+### **/api/feedCropData :**
+```sh
+	{
+		"aadharID":""
+	}
+```
+
+### **/api/getCropList :**
+```sh
+	{
+		"aadharID":""
+	}
+```
+
+### **/api/feedIrrigationData :**
+```sh
+	{
+		"aadharID":""
+	}
+```
+
+
+### **Common Format of Response :**
+```sh
+	{
+		"status":"success"
+	}
+```
+```sh
+
+	{
+		"status" : "failed",
+		"message" : "your life sucks"
+	}
 ```
