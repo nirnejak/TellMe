@@ -32,6 +32,8 @@ $ python app.py
 
 ## API Endpoints:
 
+POST the given data in JSON format
+
 **/api/getOTP :**
 ```sh
 	{
