@@ -32,7 +32,7 @@ $ python app.py
 
 ## API Endpoints:
 
-### **/api/getOTP :**
+**/api/getOTP :**
 ```sh
 	{
 		"aadharID": ""
@@ -40,7 +40,7 @@ $ python app.py
 ```
 
 
-### **/api/verifyOTP :**
+**/api/verifyOTP :**
 ```sh
 	{
 		"aadharID":"",
@@ -49,7 +49,7 @@ $ python app.py
 ```
 
 
-### **/api/register :**
+**/api/register :**
 ```sh
 	{
 		"aadharID":"",
@@ -94,28 +94,28 @@ $ python app.py
 ```
 
 
-### **/api/getFarmList :**
+**/api/getFarmList :**
 ```sh
 	{
 		"aadharID":""
 	}
 ```
 
-### **/api/feedCropData :**
+**/api/feedCropData :**
 ```sh
 	{
 		"aadharID":""
 	}
 ```
 
-### **/api/getCropList :**
+**/api/getCropList :**
 ```sh
 	{
 		"aadharID":""
 	}
 ```
 
-### **/api/feedIrrigationData :**
+**/api/feedIrrigationData :**
 ```sh
 	{
 		"aadharID":""
@@ -123,7 +123,7 @@ $ python app.py
 ```
 
 
-### **Common Format of Response :**
+**Common Format of Response :**
 ```sh
 	{
 		"status":"success"
