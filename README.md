@@ -135,6 +135,6 @@ POST the given data in JSON format
 
 	{
 		"status" : "failed",
-		"message" : "your life sucks"
+		"message" : "Something went wrong"
 	}
 ```
