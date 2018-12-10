@@ -62,7 +62,7 @@ POST the given data in JSON format
 ```
 
 
-### **/api/login :**
+**/api/login :**
 ```sh
 	{
 		"aadharID":"",
@@ -71,7 +71,7 @@ POST the given data in JSON format
 ```
 
 
-### **/api/checkNotification :**
+**/api/checkNotification :**
 ```sh
 	{
 		"aadharID":"",
@@ -79,7 +79,7 @@ POST the given data in JSON format
 ```
 
 
-### **/api/feedFarmData :**
+**/api/feedFarmData :**
 ```sh
 	{
 		"aadharID":"",
