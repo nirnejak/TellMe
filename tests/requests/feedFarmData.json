@@ -1,0 +1,50 @@
+{
+    "kind": "request",
+    "name": "feedFarmData",
+    "spec": {
+        "uri": "/feedFarmData",
+        "method": "POST",
+        "formData": [
+            {
+                "name": "aadharID",
+                "value": "111111111111"
+            },
+            {
+                "name": "farmName",
+                "value": "Jittu's Farm"
+            },
+            {
+                "name": "longitude",
+                "value": "21.1938"
+            },
+            {
+                "name": "latitude",
+                "value": "81.3509"
+            },
+            {
+                "name": "state",
+                "value": "Chhattisgarh"
+            },
+            {
+                "name": "district",
+                "value": "Durg"
+            },
+            {
+                "name": "city",
+                "value": "Bhilai"
+            },
+            {
+                "name": "landArea",
+                "value": "2"
+            },
+            {
+                "name": "groundWaterLevel",
+                "value": "20"
+            },
+            {
+                "name": "soilType",
+                "value": "Black Cotton Soil"
+            }
+        ]
+    }
+}

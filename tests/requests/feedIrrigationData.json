@@ -1,0 +1,14 @@
+{
+    "kind": "request",
+    "name": "feedIrrigationData",
+    "spec": {
+        "uri": "/feedIrrigationData",
+        "method": "POST",
+        "formData": [
+            {
+                "name": "aadharID",
+                "value": "111111111111"
+            }
+        ]
+    }
+}

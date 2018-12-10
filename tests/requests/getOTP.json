@@ -1,0 +1,14 @@
+{
+    "kind": "request",
+    "name": "getOTP",
+    "spec": {
+        "uri": "/getOTP",
+        "method": "POST",
+        "formData": [
+            {
+                "name": "aadharID",
+                "value": "111111111111"
+            }
+        ]
+    }
+}

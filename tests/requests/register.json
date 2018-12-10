@@ -1,0 +1,26 @@
+{
+    "kind": "request",
+    "name": "register",
+    "spec": {
+        "uri": "/register",
+        "method": "POST",
+        "formData": [
+            {
+                "name": "aadharID",
+                "value": "111111111111"
+            },
+            {
+                "name": "password",
+                "value": "demo1234"
+            },
+            {
+                "name": "contactNo",
+                "value": "7869290297"
+            },
+            {
+                "name": "name",
+                "value": "Jitendra Nirnejak"
+            }
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "kind": "request",
+    "name": "getCropList",
+    "spec": {
+        "uri": "/getCropList",
+        "method": "POST",
+        "formData": [
+            {
+                "name": "aadharID",
+                "value": "111111111111"
+            }
+        ]
+    }
+}

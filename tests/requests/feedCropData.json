@@ -1,0 +1,14 @@
+{
+    "kind": "request",
+    "name": "feedCropData",
+    "spec": {
+        "uri": "/feedCropData",
+        "method": "POST",
+        "formData": [
+            {
+                "name": "aadharID",
+                "value": "111111111111"
+            }
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "project": {
+        "url": "http://127.0.0.1:5000/api",
+        "resourceFiles": [
+            "TellMeAPITest/requests/getOTP.json",
+            "TellMeAPITest/requests/verifyOTP.json",
+            "TellMeAPITest/requests/register.json",
+            "TellMeAPITest/requests/login.json",
+            "TellMeAPITest/requests/checkNotification.json",
+            "TellMeAPITest/requests/feedFarmData.json",
+            "TellMeAPITest/requests/getFarmList.json",
+            "TellMeAPITest/requests/feedCropData.json",
+            "TellMeAPITest/requests/getCropList.json",
+            "TellMeAPITest/requests/feedIrrigationData.json"
+        ]
+    }
+}

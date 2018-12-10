@@ -1,0 +1,18 @@
+{
+  "kind": "request",
+  "name": "login",
+  "spec": {
+    "uri": "/login",
+    "method": "POST",
+    "formData": [
+      {
+        "name": "aadharID",
+        "value": "111111111111"
+      },
+      {
+        "name": "password",
+        "value": "demo1234"
+      }
+    ]
+  }
+}

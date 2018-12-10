@@ -1,0 +1,14 @@
+{
+    "kind": "request",
+    "name": "checkNotification",
+    "spec": {
+        "uri": "/checkNotification",
+        "method": "POST",
+        "formData": [
+            {
+                "name": "aadharID",
+                "value": "111111111111"
+            }
+        ]
+    }
+}

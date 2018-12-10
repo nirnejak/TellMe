@@ -1,0 +1,18 @@
+{
+    "kind": "request",
+    "name": "verifyOTP",
+    "spec": {
+        "uri": "/verifyOTP",
+        "method": "POST",
+        "formData": [
+        {
+            "name": "aadharID",
+            "value": "111111111111"
+        },
+        {
+            "name": "OTP",
+            "value": "12345"
+        }
+        ]
+    }
+}

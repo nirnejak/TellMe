@@ -1,0 +1,14 @@
+{
+    "kind": "request",
+    "name": "getFarmList",
+    "spec": {
+        "uri": "/getFarmList",
+        "method": "POST",
+        "formData": [
+            {
+                "name": "aadharID",
+                "value": "111111111111"
+            }
+        ]
+    }
+}
