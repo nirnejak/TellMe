@@ -2,8 +2,11 @@
 Application to collect and analyze Irrigation Data.
 
 It's an application to collect and analyze the irrigation data to reduce water wastage. It solves the problem in three major steps. Collect. Analyze. Connect.
+
 **Collect** - It starts with the collection of the data. The Irrigation data can be collected with the help of Mobile Application. It is stored in OLTP Database. Both communicate with the help of REST APIs.
+
 **Analyze** - In this phase the collected data is then migrated to OLAP Database. After the migration the data can be exported in the desired format to analyze. The administrators can export the data from the Web Portal. After that, they can analyze the data with the help of advance tools and get the insights.
+
 **Connect** - The insights and relevant information can be shared with the farmers and irrigation authorities. 
 
 ### Version
